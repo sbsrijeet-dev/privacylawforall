@@ -94,6 +94,32 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       </p>
     </div>
     <Header />
+    <!-- Creator Support & Open-Access Notice (Static, Zero-JS) -->
+    <div class="w-full border-b border-amber-200 bg-amber-50/95 py-2.5 px-4 text-amber-950 shadow-sm">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs sm:text-sm">
+        <div class="flex items-start gap-2.5">
+          <span class="text-base sm:text-lg flex-shrink-0 mt-0.5">☕</span>
+          <div class="leading-relaxed">
+            <span class="font-bold text-amber-900">A Friendly Note from the Creator:</span>
+            <em>(If your ad blocker is already off or whitelisted, thank you—you can safely ignore this!)</em>
+            If you wish to support PrivacyLawForAll, please consider pausing your ad blocker so standard non-intrusive ads can run. 
+            <strong>Don't worry—there are zero pop-up, video, or intrusive ads here</strong>; just standard, quiet ads to keep this research 100% free with no paywalls. If you cannot turn off your ad blocker, you can also support the dev with a small coffee donation at
+            <a href="https://buymeacoffee.com/sbsrijeet" target="_blank" rel="noopener noreferrer" class="font-bold underline text-amber-900 hover:text-amber-950">buymeacoffee.com/sbsrijeet</a>. Thank you for your support!
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0 self-end md:self-auto">
+          <a
+            href="https://buymeacoffee.com/sbsrijeet"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-950 px-3 py-1.5 text-xs font-bold shadow-sm transition-colors whitespace-nowrap"
+          >
+            <span>☕</span>
+            <span>Buy Me a Coffee</span>
+          </a>
+        </div>
+      </div>
+    </div>
     <main class="flex-grow bg-white">
       <slot />
     </main>
