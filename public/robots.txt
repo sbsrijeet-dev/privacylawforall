@@ -18,6 +18,9 @@ Disallow: /.git/
 Disallow: /.env
 
 # 2. Bulk Uncontrolled Data Harvesters & Commercial Training Scrapers: Disallowed
+User-agent: GPTBot
+Disallow: /
+
 User-agent: CCBot
 Disallow: /
 

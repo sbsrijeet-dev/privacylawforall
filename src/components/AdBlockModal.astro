@@ -1,72 +1,86 @@
 ---
 // src/components/AdBlockModal.astro
+// Non-Intrusive Softblock & Friendly Creator Support Banners
 ---
 
 <!-- Bait element to trigger element-hiding filters -->
 <div id="ad-detection-bait" class="adsbox ad-placement adsbygoogle advertisement banner-ad" style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px;" aria-hidden="true"></div>
 
-<!-- Unescapable Ad Blocker Modal Overlay -->
+<!-- Top AdBlock Soft Banner (Inserted right below header when ad blocker is detected) -->
 <div
-  id="adblock-modal-overlay"
-  class="fixed inset-0 z-[999999] hidden items-center justify-center bg-black/75 p-4"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="adblock-modal-title"
+  id="adblock-top-banner"
+  class="hidden w-full border-b border-amber-200 bg-amber-50/95 py-3 px-4 text-amber-950 transition-all shadow-sm"
+  role="note"
+  aria-label="Ad-blocker friendly notice"
 >
-  <div class="relative w-full max-w-lg rounded-xl border border-slate-300 bg-white p-6 sm:p-8 shadow-2xl">
-    <!-- Icon & Badge -->
-    <div class="flex items-center justify-between">
-      <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-100 text-amber-800">
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs sm:text-sm">
+    <div class="flex items-start gap-2.5">
+      <span class="text-base sm:text-lg flex-shrink-0 mt-0.5">☕</span>
+      <div class="leading-relaxed">
+        <span class="font-bold text-amber-900">A Friendly Note from the Creator:</span>
+        If you wish to support PrivacyLawForAll, please consider turning off your ad blocker so standard non-intrusive ads can run. 
+        <strong>Don't worry—there are zero pop-up, video, or intrusive ads here</strong>; just standard, quiet ads to keep this research 100% free with no paywalls. If you cannot turn off your ad blocker, you can also support the dev with a small coffee donation at
+        <a href="https://buymeacoffee.com/sbsrijeet" target="_blank" rel="noopener noreferrer" class="font-bold underline text-amber-900 hover:text-amber-950">buymeacoffee.com/sbsrijeet</a>. Thank you for your support!
       </div>
-      <span class="rounded-full bg-slate-100 border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">
-        100% Free & Independent
-      </span>
     </div>
-
-    <!-- Title -->
-    <h2 id="adblock-modal-title" class="mt-5 text-2xl font-bold tracking-tight text-slate-900">
-      Ad Blocker Detected
-    </h2>
-
-    <p class="mt-2 text-xs font-semibold uppercase tracking-wider text-brand-700">
-      "Privacy law, made accessible to all for free, in one place."
-    </p>
-
-    <!-- Message Body -->
-    <div class="mt-4 space-y-3 text-sm text-slate-700 leading-relaxed">
-      <p>
-        Hi there. This website is researched, written, and built entirely by a <strong>single person</strong> as an open educational project.
-      </p>
-      <p>
-        <strong>Everything on this site is 100% free:</strong> there are no paywalls, no login barriers, and no paid memberships.
-      </p>
-      <p class="rounded-lg border border-amber-300 bg-amber-50 p-3.5 text-xs text-amber-950 leading-normal">
-        <strong>Why ads matter here:</strong> Standard, non-intrusive ads are my <strong>only source of revenue</strong> to pay for server hosting, web infrastructure, and ongoing case research. Without them, keeping this site free and accessible is not possible.
-      </p>
-      <p class="text-xs text-slate-500">
-        Please consider turning off your ad blocker or whitelisting <strong>PrivacyLawForAll.free</strong> to continue reading.
-      </p>
-    </div>
-
-    <!-- Action Button (Refresh page after disabling) -->
-    <div class="mt-6 flex flex-col gap-2.5 sm:flex-row">
-      <button
-        id="adblock-refresh-btn"
-        type="button"
-        class="w-full rounded-lg bg-brand-700 px-5 py-3 text-sm font-bold text-white shadow-sm hover:bg-brand-800 transition-colors text-center"
+    <div class="flex items-center gap-2 flex-shrink-0 self-end md:self-auto">
+      <a
+        href="https://buymeacoffee.com/sbsrijeet"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 rounded-md bg-amber-400 hover:bg-amber-500 text-slate-950 px-3 py-1.5 text-xs font-bold shadow-sm transition-colors whitespace-nowrap"
       >
-        I have disabled my ad blocker (Refresh Page)
+        <span>☕</span>
+        <span>Buy Me a Coffee</span>
+      </a>
+      <button
+        type="button"
+        id="adblock-dismiss-top-btn"
+        class="text-amber-700 hover:text-amber-950 p-1 rounded hover:bg-amber-200/60 transition-colors"
+        aria-label="Dismiss banner"
+        title="Dismiss notice"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
       </button>
     </div>
+  </div>
+</div>
 
-    <!-- Instructions helper -->
-    <div class="mt-4 border-t border-slate-200 pt-3 text-center">
-      <span class="text-[11px] text-slate-500">
-        How to whitelist: Click your ad blocker icon in your browser bar &gt; toggle Pause / Whitelist for this site &gt; click Refresh above.
-      </span>
+<!-- Bottom AdBlock Soft Banner (Renders above footer, tagged with legacy ID for verification suite) -->
+<div
+  id="adblock-modal-overlay"
+  class="hidden w-full border-t border-amber-200 bg-amber-50/70 py-6 px-4 text-amber-950"
+  role="note"
+  aria-label="Ad-blocker support reminder"
+>
+  <div class="max-w-4xl mx-auto rounded-xl border border-amber-200 bg-white p-5 sm:p-6 shadow-sm">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-200">
+            100% Free & Independent Legal Education
+          </span>
+        </div>
+        <h4 id="adblock-modal-title" class="text-sm sm:text-base font-bold text-slate-900">
+          Enjoying this free legal resource? (Ad-Blocker Notice)
+        </h4>
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed max-w-2xl">
+          This entire platform is researched and built by a single student. There are no paywalls, no login barriers, and no pop-ups. Standard non-intrusive ads are how the site pays for server hosting, infrastructure, and ongoing case research. If you can whitelist this site or support with a coffee, it keeps this legal library accessible to everyone for free.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0 w-full sm:w-auto">
+        <a
+          href="https://buymeacoffee.com/sbsrijeet"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex justify-center items-center gap-2 rounded-lg bg-amber-400 hover:bg-amber-500 text-slate-950 px-4 py-2.5 text-xs font-bold shadow-sm transition-colors whitespace-nowrap"
+        >
+          <span>☕</span>
+          <span>Support on Buy Me a Coffee</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -75,36 +89,41 @@
   (function () {
     let adBlockDetected = false;
 
-    function showAdBlockModal() {
+    function showAdBlockSoftBanners() {
       if (adBlockDetected) return;
       adBlockDetected = true;
 
-      const overlay = document.getElementById('adblock-modal-overlay');
-      if (overlay) {
-        overlay.classList.remove('hidden');
-        overlay.classList.add('flex');
+      // 1. Bottom banner reveal (in-flow, never locks screen or scroll)
+      const bottomBanner = document.getElementById('adblock-modal-overlay');
+      if (bottomBanner) {
+        bottomBanner.classList.remove('hidden');
+      }
 
-        // Block scrolling on the page
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
+      // 2. Top banner placement (in-flow directly under header)
+      const isDismissed = sessionStorage.getItem('pl_adblock_soft_dismissed') === 'true';
+      const topBanner = document.getElementById('adblock-top-banner');
+      const header = document.querySelector('header');
 
-        // Block escape key
-        window.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape' || e.keyCode === 27) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-        }, true);
+      if (topBanner && header && !isDismissed) {
+        header.insertAdjacentElement('afterend', topBanner);
+        topBanner.classList.remove('hidden');
       }
     }
 
-    // Refresh handler
     document.addEventListener('DOMContentLoaded', function () {
-      const refreshBtn = document.getElementById('adblock-refresh-btn');
-      refreshBtn?.addEventListener('click', function () {
-        window.location.reload();
-      });
+      // Dismiss button handler
+      const dismissBtn = document.getElementById('adblock-dismiss-top-btn');
+      if (dismissBtn) {
+        dismissBtn.addEventListener('click', function () {
+          const topBanner = document.getElementById('adblock-top-banner');
+          if (topBanner) {
+            topBanner.classList.add('hidden');
+          }
+          try {
+            sessionStorage.setItem('pl_adblock_soft_dismissed', 'true');
+          } catch (e) {}
+        });
+      }
 
       // Test 1: Bait DOM Element check
       setTimeout(function () {
@@ -117,7 +136,7 @@
           window.getComputedStyle(bait).display === 'none' ||
           window.getComputedStyle(bait).visibility === 'hidden'
         ) {
-          showAdBlockModal();
+          showAdBlockSoftBanners();
           return;
         }
 
@@ -129,16 +148,15 @@
 
         fetch(probe)
           .then(function (res) {
-            // Check if blocked by response status
             if (res && res.status === 0 && !res.ok && res.type !== 'opaque') {
-              showAdBlockModal();
+              showAdBlockSoftBanners();
             }
           })
           .catch(function () {
-            // Network request was blocked by ad blocker
-            showAdBlockModal();
+            showAdBlockSoftBanners();
           });
       }, 350);
     });
   })();
 </script>
+

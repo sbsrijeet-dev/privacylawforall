@@ -164,8 +164,8 @@ def audit_static_distribution():
         rel_path = hf.relative_to(DIST_DIR).as_posix()
         content = hf.read_text(encoding="utf-8")
 
-        # Skip honeypot trap page from standard public layout checks
-        if "security/trap" in rel_path:
+        # Skip honeypot trap page and Google search console verification file from standard public layout checks
+        if "security/trap" in rel_path or rel_path.startswith("google"):
             continue
 
         # 1. Check Banner
@@ -273,7 +273,7 @@ def audit_static_distribution():
         audit_errors.append("robots.txt: File not found in public directory.")
 
     # Print summary
-    user_pages_count = len(html_files) - 1 # excluding security/trap
+    user_pages_count = len([f for f in html_files if "security/trap" not in f.name and not f.name.startswith("google")])
     print(f"  Audit Metrics:")
     print(f"  - Total Pages Audited: {len(html_files)}")
     print(f"  - Top Disclaimer Banner Present: {pages_with_banner}/{user_pages_count} public pages (100% required)")
