@@ -1,0 +1,68 @@
+---
+// src/pages/privacy.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy & Cookie Disclosure | PrivacyLaw.free"
+  description="Our model privacy policy: Zero tracking by default, no account creation, no personal data harvesting, and transparent Google AdSense disclosure."
+>
+  <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 border border-emerald-200">
+        Transparent Privacy Practices
+      </span>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+        Privacy Policy & Cookie Disclosure
+      </h1>
+      <p class="mt-3 text-sm text-slate-600">
+        Effective Date: September 2026
+      </p>
+    </div>
+
+    <div class="mt-8 rounded-xl border border-emerald-300 bg-emerald-50/60 p-6 text-sm text-emerald-950 leading-relaxed">
+      <strong>Our Core Promise:</strong> Because this is a privacy law educational platform, we hold ourselves to the highest global data protection standards. We require <strong>no account creation, no login, and no payment details</strong>. We do not harvest your email address or track your browsing across the web.
+    </div>
+
+    <div class="prose prose-slate mt-8 max-w-none text-sm leading-relaxed space-y-6">
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">1. Data Controller</h2>
+        <p>
+          PrivacyLaw.free operates as an open-access educational resource. For inquiries regarding our privacy practices, you can contact the administrative team at <code>privacy@privacylawexplainer.org</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">2. Personal Data We Collect</h2>
+        <p>
+          We do not require you to register an account or log in to view our content. All articles and resources are 100% accessible to everyone without entering personal information.
+        </p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li><strong>Local Browser Storage:</strong> We use client-side <code>localStorage</code> exclusively to remember your cookie consent preferences. This information never leaves your device.</li>
+          <li><strong>Standard Server Logs:</strong> Standard web hosting logs may automatically record temporary technical telemetry (IP address, user agent, requested URL) strictly for DDoS mitigation, cybersecurity defense, and performance monitoring (Article 6(1)(f) GDPR legitimate interest).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">3. Advertising & Google AdSense</h2>
+        <p>
+          To maintain free, unrestricted access for students, researchers, and professionals without charging subscription fees or erecting paywalls, we display advertising through Google AdSense.
+        </p>
+        <p class="mt-2">
+          In compliance with the ePrivacy Directive and GDPR standards:
+        </p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li><strong>By default:</strong> Only non-personalized advertisements are served. No behavioral profiling or cross-site tracking cookies are set without your prior affirmative consent.</li>
+          <li><strong>With your consent:</strong> Google and its certified advertising partners may use cookies to serve ads based on your prior visits to this or other websites. You may revoke or modify your consent at any time.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">4. Your Rights Under GDPR, DPDPA & CCPA</h2>
+        <p>
+          Depending on your jurisdiction, you have statutory rights regarding your personal data, including the right to access, rectification, erasure, restriction, objection, and the right to lodge a complaint with your supervisory authority (such as the DPC, CNIL, AEPD, Garante, ICO, or DPBI).
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,98 @@
+---
+// src/pages/gdpr/uk.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+
+const allCases = await getCollection('cases');
+const ukCases = allCases.filter((c) => c.data.country === 'United Kingdom' || c.data.jurisdiction === 'UK GDPR');
+---
+
+<BaseLayout
+  title="UK GDPR Enforcement Hub (ICO) | Cybersecurity Breaches & Children's Code"
+  description="Explore the UK Information Commissioner's Office (ICO) enforcement record: British Airways £20M breach, Marriott, Clearview AI, and the Children's Code."
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex items-center space-x-2 text-xs text-slate-500">
+      <a href="/" class="hover:text-red-900">Home</a>
+      <span>/</span>
+      <a href="/gdpr" class="hover:text-red-900">EU GDPR</a>
+      <span>/</span>
+      <span class="text-slate-900 font-medium">United Kingdom (ICO)</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3">
+        <span class="text-4xl">🇬🇧</span>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-900">
+            National Enforcement Hub
+          </span>
+          <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            United Kingdom: ICO Enforcement & Guidelines
+          </h1>
+        </div>
+      </div>
+      <p class="mt-4 text-base text-slate-600 leading-relaxed">
+        The <strong>Information Commissioner's Office (ICO)</strong> regulates privacy across the UK under the UK GDPR and the Data Protection Act 2018. The ICO has set defining global standards in technical security under Article 32 (British Airways, Marriott) and pioneered the statutory <em>Age Appropriate Design Code (Children's Code)</em>.
+      </p>
+    </div>
+
+    <!-- Ad Placement Top -->
+    <AdSlot slotId="uk-hub-top" format="horizontal" />
+
+    <!-- Core Characteristics of UK Enforcement -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="rounded border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="font-bold text-slate-900 text-base">Cybersecurity & Article 32</div>
+        <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+          The ICO strictly analyzes technical measures: absence of multi-factor authentication, unpatched vulnerabilities, or slow incident detection trigger heavy penalties.
+        </p>
+      </div>
+
+      <div class="rounded border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="font-bold text-slate-900 text-base">The Children's Code</div>
+        <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+          The ICO's 15 standards of age-appropriate design force online services to turn geolocation off by default, disable behavioral profiling, and implement high privacy defaults for minors.
+        </p>
+      </div>
+
+      <div class="rounded border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="font-bold text-slate-900 text-base">Biometrics & Facial Scraping Ban</div>
+        <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+          The ICO aggressively enforces Article 9 biometric protections, banning mass online scraping operations (e.g. Clearview AI £7.55M fine and data destruction order).
+        </p>
+      </div>
+    </div>
+
+    <!-- Cases List -->
+    <div class="mt-12">
+      <div class="border-b border-slate-200 pb-3">
+        <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+          Explained Decisions from the UK (ICO) ({ukCases.length})
+        </h2>
+      </div>
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {ukCases.map((entry) => (
+          <CaseCard
+            title={entry.data.title}
+            slug={entry.slug}
+            dpa={entry.data.dpa}
+            country={entry.data.country}
+            fine={entry.data.fine_amount}
+            articles={entry.data.articles_cited}
+            tldr={entry.data.tldr}
+            jurisdiction={entry.data.jurisdiction}
+            category={entry.data.category}
+            isTop5={entry.data.is_top_5}
+            top5Rank={entry.data.top_5_rank}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+

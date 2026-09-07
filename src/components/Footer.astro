@@ -1,0 +1,84 @@
+---
+// src/components/Footer.astro
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-20 border-t border-slate-200 bg-white text-slate-600">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+      <!-- Col 1: About & Motto -->
+      <div class="md:col-span-2 space-y-3">
+        <div class="flex items-center gap-2">
+          <div class="flex h-7 w-7 items-center justify-center rounded bg-red-900 text-white font-bold text-sm">
+            P
+          </div>
+          <span class="text-base font-bold text-slate-900">
+            PrivacyLaw<span class="text-red-900">.free</span>
+          </span>
+        </div>
+        <p class="text-sm font-semibold text-red-900">
+          "Privacy law, made accessible to all for free, in one place."
+        </p>
+        <p class="text-xs text-slate-600 leading-relaxed max-w-md">
+          A free, public, no-paywall repository translating high-stakes global data protection enforcement actions, landmark fines, and emerging AI regulations into plain, understandable English.
+        </p>
+      </div>
+
+      <!-- Col 2: Hubs & Jurisdictions -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900">
+          Law & Case Hubs
+        </h3>
+        <ul class="mt-3 space-y-2 text-xs">
+          <li><a href="/top-5" class="hover:text-red-900 font-semibold text-amber-900">Top 5 Biggest Fines</a></li>
+          <li><a href="/cases" class="hover:text-red-900">Master Case Directory</a></li>
+          <li><a href="/categories" class="hover:text-red-900 font-medium">Thematic Categories</a></li>
+          <li><a href="/gdpr/articles" class="hover:text-red-900 font-medium">Statutory Articles Directory</a></li>
+          <li><a href="/compliance-mistakes" class="hover:text-red-900 font-medium">10 Compliance Mistakes</a></li>
+          <li><a href="/gdpr" class="hover:text-red-900">European Union GDPR</a></li>
+          <li><a href="/gdpr/spain" class="hover:text-red-900">Spain (AEPD)</a></li>
+          <li><a href="/gdpr/france" class="hover:text-red-900">France (CNIL)</a></li>
+          <li><a href="/gdpr/ireland" class="hover:text-red-900">Ireland (DPC)</a></li>
+          <li><a href="/gdpr/italy" class="hover:text-red-900">Italy (Garante)</a></li>
+          <li><a href="/gdpr/uk" class="hover:text-red-900">UK (ICO)</a></li>
+          <li><a href="/dpdpa" class="hover:text-red-900">India DPDPA</a></li>
+          <li><a href="/eu-ai-act" class="hover:text-red-900">EU AI Act</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Legal & Standards -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900">
+          Transparency & Legal
+        </h3>
+        <ul class="mt-3 space-y-2 text-xs">
+          <li><a href="/terms" class="hover:text-red-900">Terms of Use</a></li>
+          <li><a href="/disclaimer" class="hover:text-red-900">Educational Disclaimer</a></li>
+          <li><a href="/privacy" class="hover:text-red-900">Privacy Policy & Cookies</a></li>
+          <li><a href="/ads.txt" class="hover:text-red-900">Publisher ads.txt</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Prominent Disclaimer Banner -->
+    <div class="mt-8 rounded border border-amber-300 bg-amber-50 p-4 text-xs text-amber-950">
+      <div class="flex items-start gap-2.5">
+        <svg class="h-4 w-4 shrink-0 text-amber-700 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="leading-relaxed">
+          <strong>Non-Legal Advice Notice:</strong> PrivacyLaw.free is an independent educational and research platform. Content provided herein represents educational summaries, academic synthesis, and compliance analysis. It does not constitute formal legal advice, a formal legal opinion, or an attorney-client relationship. Every factual case claim is programmatically verified against public enforcement records.
+        </p>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-6 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row">
+      <p>&copy; {year} PrivacyLaw.free. All rights reserved. Open access educational initiative.</p>
+      <p class="text-[11px] text-slate-500">
+        All articles deterministically verified against official regulatory decision records.
+      </p>
+    </div>
+  </div>
+</footer>
+

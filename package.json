@@ -1,0 +1,18 @@
+{
+  "name": "privacy-law-explainer",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "verify": "python tools/verifier/verify_article.py"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.5",
+    "@tailwindcss/typography": "^0.5.16",
+    "astro": "^5.4.2",
+    "tailwindcss": "^3.4.17"
+  }
+}

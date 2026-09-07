@@ -1,0 +1,398 @@
+---
+// src/pages/gdpr/articles.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/AdSlot.astro';
+
+const allCases = await getCollection('cases');
+
+// Helper to find cases that cite a specific article number
+function getCasesForArticle(artNum: string) {
+  return allCases.filter((c) =>
+    c.data.articles_cited.some((a) => {
+      const match = a.match(/\d+/);
+      return match && match[0] === artNum;
+    })
+  );
+}
+
+interface StatutoryArticle {
+  number: string;
+  title: string;
+  chapter: string;
+  summary: string;
+  keyRequirements: string[];
+  regulatorFocus: string;
+}
+
+const ARTICLES: StatutoryArticle[] = [
+  {
+    number: '5',
+    title: 'Principles Relating to Processing of Personal Data',
+    chapter: 'Chapter II: Principles',
+    summary: 'The constitutional bedrock of the GDPR. Defines the 7 golden principles: lawfulness/fairness/transparency, purpose limitation, data minimisation, accuracy, storage limitation, integrity & confidentiality (security), and accountability.',
+    keyRequirements: [
+      'You cannot collect personal data just in case—every field must have an active purpose.',
+      'Data cannot be quietly repurposed for secondary analytics or training without a new lawful basis.',
+      'The Controller bears the legal burden of proof under Article 5(2) accountability.',
+    ],
+    regulatorFocus: 'Cited in virtually every major enforcement action. If any rule is broken, regulators routinely sanction under Article 5.',
+  },
+  {
+    number: '6',
+    title: 'Lawfulness of Processing',
+    chapter: 'Chapter II: Principles',
+    summary: 'Every single operation performed on personal data must rest on at least one of the 6 exhaustive lawful bases: Consent, Contract Performance, Legal Obligation, Vital Interests, Public Task, or Legitimate Interests.',
+    keyRequirements: [
+      'You cannot switch lawful bases retroactively after getting challenged by a user.',
+      'Contractual necessity (6(1)(b)) cannot be stretched to cover behavioural advertising or telemetry.',
+      'Legitimate interests (6(1)(f)) strictly requires a documented 3-part balancing test.',
+    ],
+    regulatorFocus: 'Scrutinized heavily in Meta Ireland, Google France, and AI training investigations where companies claimed contract instead of consent.',
+  },
+  {
+    number: '7',
+    title: 'Conditions for Consent',
+    chapter: 'Chapter II: Principles',
+    summary: 'Sets the global benchmark for affirmative consent. Consent must be freely given, specific, informed, and an unambiguous indication of the data subject’s wishes by a clear affirmative action.',
+    keyRequirements: [
+      'Pre-ticked checkboxes or silence do not constitute valid consent.',
+      'Consent cannot be bundled as a non-negotiable condition of using a service (tying prohibition).',
+      'Withdrawing consent must be just as easy as giving it (one-click in, one-click out).',
+    ],
+    regulatorFocus: 'The basis for massive fines against Google and CaixaBank for deceptive consent modals and bundled contracts.',
+  },
+  {
+    number: '8',
+    title: "Conditions Applicable to Child's Consent in Information Society Services",
+    chapter: 'Chapter II: Principles',
+    summary: 'Restricts online services from collecting consent directly from children below 16 (or down to 13 depending on member state law) without verifiable parental consent.',
+    keyRequirements: [
+      'Controllers must make reasonable efforts to verify age, taking into consideration available technology.',
+      'Profiling and behavioral ad targeting directed at children face severe supervisory scrutiny.',
+    ],
+    regulatorFocus: 'Core foundation in the Irish DPC €345M sanction against TikTok and the €405M fine against Instagram.',
+  },
+  {
+    number: '9',
+    title: 'Processing of Special Categories of Personal Data',
+    chapter: 'Chapter II: Principles',
+    summary: 'General prohibition on processing sensitive personal data: biometric data for uniquely identifying a person, health data, genetic data, sexual orientation, political opinions, and religious beliefs—unless strict exceptions apply.',
+    keyRequirements: [
+      'Default legal status is prohibited unless explicit consent or statutory public health exception applies.',
+      'Facial recognition and biometric identification cannot rely on ordinary legitimate interests.',
+    ],
+    regulatorFocus: 'Central to the UK ICO £7.55M penalty against Clearview AI for scraping internet selfies to train biometric police algorithms.',
+  },
+  {
+    number: '12',
+    title: 'Transparent Information, Communication and Modalities',
+    chapter: 'Chapter III: Rights of the Data Subject',
+    summary: 'Mandates that any privacy notice or communication must be delivered in a concise, transparent, intelligible, and easily accessible form, using clear and plain language.',
+    keyRequirements: [
+      'No 50-page legal treatises that ordinary consumers cannot digest.',
+      'Requires layered disclosures: simple summary upfront, technical legal specs on drill-down.',
+      'Responses to user rights requests (DSARs) must be provided within one month free of charge.',
+    ],
+    regulatorFocus: 'Heavily cited against WhatsApp Ireland (€225M) and TikTok for confusing and fragmented privacy policies.',
+  },
+  {
+    number: '13',
+    title: 'Information to be Provided Where Personal Data are Collected Directly',
+    chapter: 'Chapter III: Rights of the Data Subject',
+    summary: 'The statutory shopping list for first-party Privacy Policies. Specifies every item controllers must disclose at the exact moment data is captured.',
+    keyRequirements: [
+      'Must name the controller, DPO contact, explicit purposes, legal basis, and recipients.',
+      'Must state retention periods or criteria, rights to withdraw consent, and right to lodge complaints.',
+      'Must explicitly state whether data will be transferred outside the EEA and the safeguards used.',
+    ],
+    regulatorFocus: 'Frequently sanctioned alongside Article 12 when tech companies fail to clearly identify who receives user telemetry.',
+  },
+  {
+    number: '14',
+    title: 'Information Where Data Have Not Been Obtained from the Data Subject',
+    chapter: 'Chapter III: Rights of the Data Subject',
+    summary: 'Notice obligations when data is purchased from brokers, scraped from public sources, or received via third-party integrations.',
+    keyRequirements: [
+      'Controller must notify the data subject within a reasonable period (maximum 1 month).',
+      'Must specify the categories of data and the specific source from which the data originated.',
+    ],
+    regulatorFocus: 'Triggered in scraping, data broker, and adtech RTB cases where users never knew their profiles were acquired.',
+  },
+  {
+    number: '15',
+    title: 'Right of Access by the Data Subject (DSAR)',
+    chapter: 'Chapter III: Rights of the Data Subject',
+    summary: 'Gives individuals the right to confirm whether their data is processed, obtain a free copy of the data, and inspect the specific categories, purposes, and recipients.',
+    keyRequirements: [
+      'Must provide a full, portable copy of the actual personal data, not just generic summaries.',
+      'Must be fulfilled within 30 calendar days.',
+    ],
+    regulatorFocus: 'Massively tested in AdTech enforcement actions (like Criteo €40M) where companies failed to supply raw behavioral tracking records upon request.',
+  },
+  {
+    number: '17',
+    title: 'Right to Erasure ("Right to be Forgotten")',
+    chapter: 'Chapter III: Rights of the Data Subject',
+    summary: 'Obligates controllers to erase personal data without undue delay when consent is withdrawn, data is no longer necessary, or processing was unlawful.',
+    keyRequirements: [
+      'Requires cascading deletion notifications to third-party processors and downstream recipients.',
+      'Limited exceptions apply for legal obligations, public health, or freedom of expression.',
+    ],
+    regulatorFocus: 'Cited in Clearview AI (ordering deletion of UK faces) and telemarketing cases where opted-out numbers remained in dialler databases.',
+  },
+  {
+    number: '21',
+    title: 'Right to Object',
+    chapter: 'Chapter III: Rights of the Data Subject',
+    summary: 'Empowers data subjects to halt processing based on legitimate interests. For direct marketing and profiling, the right to object is absolute—controllers have zero discretion to refuse.',
+    keyRequirements: [
+      'Direct marketing objection must be honored instantly with no exceptions or administrative fees.',
+      'Must be explicitly brought to the attention of the user in a clear and separate manner.',
+    ],
+    regulatorFocus: 'The backbone of Spanish AEPD and Italian Garante telemarketing enforcement actions.',
+  },
+  {
+    number: '24',
+    title: 'Responsibility of the Controller',
+    chapter: 'Chapter IV: Controller and Processor',
+    summary: 'Obligates the controller to implement appropriate technical and organizational measures to ensure and be able to demonstrate that processing is performed in compliance with GDPR.',
+    keyRequirements: [
+      'Controllers cannot claim ignorance of what their marketing vendors or cloud contractors are doing.',
+      'Requires documented governance frameworks, policies, and operational audit trails.',
+    ],
+    regulatorFocus: 'Applied in vendor negligence cases (Enel Energia, Vodafone) where companies failed to supervise third-party sales agencies.',
+  },
+  {
+    number: '25',
+    title: 'Data Protection by Design and by Default',
+    chapter: 'Chapter IV: Controller and Processor',
+    summary: 'Requires privacy safeguards to be engineered into system architecture from day one. Settings must default to the most privacy-protective option without requiring user intervention.',
+    keyRequirements: [
+      'Public profiles, location broadcasting, and data sharing must default to OFF.',
+      'Only the minimum necessary data should be collected and retained by automated system defaults.',
+    ],
+    regulatorFocus: 'Decisive factor in child privacy rulings against Instagram (public teen accounts by default) and TikTok.',
+  },
+  {
+    number: '28',
+    title: 'Processor Obligations & Data Processing Agreements (DPAs)',
+    chapter: 'Chapter IV: Controller and Processor',
+    summary: 'Regulates the controller-processor relationship. Processors may only act on documented controller instructions and must sign a binding Article 28 contract.',
+    keyRequirements: [
+      'Strict prohibition on subcontracting or onboarding sub-processors without prior written authorization.',
+      'Processor must assist controller in audits, breach notifications, and deletion upon contract end.',
+    ],
+    regulatorFocus: 'Heavily penalized in Spain (Vodafone €8.15M) where vendors engaged unauthorized subcontractors in third countries.',
+  },
+  {
+    number: '32',
+    title: 'Security of Processing',
+    chapter: 'Chapter IV: Controller and Processor',
+    summary: 'Mandates technical and organizational security measures appropriate to risk: encryption, pseudonymisation, confidentiality, resilience, and regular vulnerability testing.',
+    keyRequirements: [
+      'Requires modern access control, multi-factor authentication (MFA), and end-to-end encryption.',
+      'Negligent software acquisition without vulnerability scanning violates Article 32.',
+    ],
+    regulatorFocus: 'The primary basis for massive breach penalties: British Airways (£20M) and Marriott (£18.4M).',
+  },
+  {
+    number: '33',
+    title: 'Notification of a Personal Data Breach to the Supervisory Authority',
+    chapter: 'Chapter IV: Controller and Processor',
+    summary: 'Imposes the strict 72-hour regulatory notification clock upon becoming aware of a personal data breach posing a risk to individuals.',
+    keyRequirements: [
+      'Must describe the nature of the breach, approximate number of victims, and mitigation steps.',
+      'Delays beyond 72 hours must be accompanied by documented reasoned justifications.',
+    ],
+    regulatorFocus: 'Routinely enforced when companies spend weeks investigating internally before alerting their national data protection authority.',
+  },
+  {
+    number: '44',
+    title: 'General Principle for International Transfers',
+    chapter: 'Chapter V: Third Country Transfers',
+    summary: 'Prohibits transferring personal data outside the European Economic Area (EEA) unless the destination country or recipient satisfies Chapter V safeguards.',
+    keyRequirements: [
+      'Applies to both direct server transfers and remote read-access by parent companies overseas.',
+      'The level of protection guaranteed by GDPR cannot be undermined by cross-border movement.',
+    ],
+    regulatorFocus: 'Foundational provision in the €1.2 Billion Meta transatlantic transfer decision.',
+  },
+  {
+    number: '46',
+    title: 'Transfers Subject to Appropriate Safeguards (SCCs)',
+    chapter: 'Chapter V: Third Country Transfers',
+    summary: 'Authorizes data transfers using Standard Contractual Clauses (SCCs) or Binding Corporate Rules (BCRs), provided enforceable data subject rights and effective legal remedies exist.',
+    keyRequirements: [
+      'Post-Schrems II, signing standard clauses is insufficient if local surveillance laws conflict with them.',
+      'Controllers must conduct a Transfer Impact Assessment (TIA) and implement supplementary safeguards.',
+    ],
+    regulatorFocus: 'The explicit legal basis for the highest fine in European history against Meta Ireland (€1.2B).',
+  },
+  {
+    number: '82',
+    title: 'Right to Compensation and Liability',
+    chapter: 'Chapter VIII: Remedies, Liability and Penalties',
+    summary: 'Grants any individual who has suffered material or non-material damage (including distress and loss of control over data) the right to receive compensation from the controller or processor.',
+    keyRequirements: [
+      'Opens the floodgates to collective class actions and consumer compensation claims.',
+      'Controller is liable unless it proves it is in no way responsible for the event.',
+    ],
+    regulatorFocus: 'Follow-up civil litigation vehicle trailing behind major fines (e.g. British Airways, Marriott settlement funds).',
+  },
+  {
+    number: '83',
+    title: 'General Conditions for Imposing Administrative Fines',
+    chapter: 'Chapter VIII: Remedies, Liability and Penalties',
+    summary: 'The enforcement teeth of GDPR. Defines the two fine tiers: up to €10M / 2% global turnover for administrative breaches, and up to €20M / 4% global turnover for core principle and transfer violations.',
+    keyRequirements: [
+      'Fines must be effective, proportionate, and dissuasive in each individual case.',
+      'Calculated based on total worldwide annual turnover of the entire corporate group (undertaking).',
+    ],
+    regulatorFocus: 'Cited in every financial penalty notice to establish jurisdictional math and calculation criteria.',
+  },
+];
+---
+
+<BaseLayout
+  title="GDPR Statutory Articles Directory | Plain-English Cheat Sheet & Case Law"
+  description="Master the 20 most critical GDPR articles in simple, accessible English. Each article explains statutory requirements, common regulator traps, and links directly to real landmark fines."
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex items-center space-x-2 text-xs text-slate-500">
+      <a href="/" class="hover:text-red-900">Home</a>
+      <span>/</span>
+      <a href="/gdpr" class="hover:text-red-900">EU GDPR</a>
+      <span>/</span>
+      <span class="text-slate-900 font-medium">Articles Directory</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-1.5 rounded border border-slate-300 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-700">
+        Statutory Reference Encyclopedia
+      </span>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+        GDPR Articles Explained in Plain English
+      </h1>
+      <p class="mt-4 text-base text-slate-600 leading-relaxed">
+        The General Data Protection Regulation contains 99 articles, but enforcement focuses overwhelmingly on a vital core. Below, we break down the <strong>20 most critical and heavily tested articles</strong> in plain, jargon-free English—with direct links to the real-world enforcement cases that breached them.
+      </p>
+    </div>
+
+    <!-- Quick Jump Anchor Index -->
+    <div class="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-6">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">
+        Quick Jump to Article
+      </h3>
+      <div class="flex flex-wrap gap-2">
+        {ARTICLES.map((art) => (
+          <a
+            href={`#article-${art.number}`}
+            class="rounded border border-slate-200 bg-white px-2.5 py-1 text-xs font-bold text-slate-700 hover:border-red-900 hover:text-red-900 transition-colors"
+          >
+            Art. {art.number}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Top Ad Placement -->
+    <AdSlot slotId="articles-directory-top" format="horizontal" />
+
+    <!-- Articles Master Stream -->
+    <div class="mt-12 space-y-12">
+      {ARTICLES.map((art) => {
+        const relatedCases = getCasesForArticle(art.number);
+        return (
+          <article
+            id={`article-${art.number}`}
+            class="scroll-mt-24 rounded-xl border border-slate-300 bg-white p-6 sm:p-8 shadow-sm"
+          >
+            <!-- Article Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-200 pb-4">
+              <div>
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  {art.chapter}
+                </span>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">
+                  Article {art.number}: {art.title}
+                </h2>
+              </div>
+              <span class="self-start sm:self-auto rounded bg-red-50 border border-red-200 px-3 py-1 text-xs font-bold text-red-900">
+                {relatedCases.length} {relatedCases.length === 1 ? 'Case Breach' : 'Case Breaches'} in Library
+              </span>
+            </div>
+
+            <!-- Plain English Breakdown -->
+            <div class="mt-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-1">
+                Plain-English Breakdown:
+              </h4>
+              <p class="text-sm text-slate-700 leading-relaxed">
+                {art.summary}
+              </p>
+            </div>
+
+            <!-- Key Requirements -->
+            <div class="mt-4 rounded-lg bg-slate-50 border border-slate-200 p-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-2">
+                What Compliance Requires in Practice:
+              </h4>
+              <ul class="space-y-1.5 text-xs text-slate-700">
+                {art.keyRequirements.map((req) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-700 font-bold">✓</span>
+                    <span>{req}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- What Regulators Watch For -->
+            <div class="mt-4 text-xs text-slate-600 leading-relaxed">
+              <strong class="text-slate-900">Regulatory Focus:</strong> {art.regulatorFocus}
+            </div>
+
+            <!-- Linked Real-World Cases -->
+            <div class="mt-6 border-t border-slate-100 pt-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-red-900 mb-3">
+                Real-World Cases Breaching Article {art.number}:
+              </h4>
+
+              {relatedCases.length > 0 ? (
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {relatedCases.map((c) => (
+                    <a
+                      href={`/cases/${c.slug}`}
+                      class="group block rounded border border-slate-200 bg-white p-3 hover:border-red-900 transition-all shadow-sm"
+                    >
+                      <div class="flex items-center justify-between text-[10px] text-slate-500 mb-1">
+                        <span class="font-bold text-red-900">{c.data.fine_amount}</span>
+                        <span>{c.data.country}</span>
+                      </div>
+                      <h5 class="text-xs font-bold text-slate-900 group-hover:text-red-900 line-clamp-2 transition-colors">
+                        {c.data.popular_name || c.data.title}
+                      </h5>
+                      <p class="mt-1 text-[11px] text-slate-600 line-clamp-2 leading-normal">
+                        {c.data.tldr}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <p class="text-xs text-slate-500 italic">
+                  Additional specific case explainers for this article are queued in our 3-day publication cycle.
+                </p>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    <!-- Bottom Ad Placement -->
+    <AdSlot slotId="articles-directory-bottom" format="horizontal" />
+  </div>
+</BaseLayout>

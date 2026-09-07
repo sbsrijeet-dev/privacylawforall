@@ -1,0 +1,206 @@
+---
+// src/pages/gdpr/index.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+
+const allCases = await getCollection('cases');
+const gdprCases = allCases.filter((c) => c.data.jurisdiction === 'EU GDPR');
+
+const dpaHubs = [
+  {
+    country: 'Ireland',
+    dpa: 'Data Protection Commission (DPC)',
+    slug: '/gdpr/ireland',
+    flag: '🇮🇪',
+    focus: 'Lead authority for Big Tech European headquarters (Meta, Google, TikTok, Apple). Issues the largest multi-hundred-million-euro cross-border fines.',
+    casesCount: allCases.filter((c) => c.data.country === 'Ireland').length,
+  },
+  {
+    country: 'France',
+    dpa: 'CNIL',
+    slug: '/gdpr/france',
+    flag: '🇫🇷',
+    focus: 'Leader in ePrivacy, cookie walls, advertising trackers, and AI biometric governance. Grounded the "Asymmetry of Effort" cookie doctrine.',
+    casesCount: allCases.filter((c) => c.data.country === 'France').length,
+  },
+  {
+    country: 'Spain',
+    dpa: 'AEPD',
+    slug: '/gdpr/spain',
+    flag: '🇪🇸',
+    focus: 'Highest volume of enforcement in Europe. Aggressive pursuit of spam calls, vendor subcontracting negligence, and cookie consent.',
+    casesCount: allCases.filter((c) => c.data.country === 'Spain').length,
+  },
+  {
+    country: 'Italy',
+    dpa: 'Garante per la Protezione dei Dati Personali',
+    slug: '/gdpr/italy',
+    flag: '🇮🇹',
+    focus: 'Pioneer in Generative AI enforcement (ChatGPT temporary block) and telemarketing consent databases.',
+    casesCount: allCases.filter((c) => c.data.country === 'Italy').length,
+  },
+  {
+    country: 'United Kingdom',
+    dpa: 'Information Commissioner\'s Office (ICO)',
+    slug: '/gdpr/uk',
+    flag: '🇬🇧',
+    focus: 'UK GDPR enforcement, Age Appropriate Design Code for children, and major cybersecurity breach penalties.',
+    casesCount: allCases.filter((c) => c.data.country === 'United Kingdom').length,
+  },
+];
+---
+
+<BaseLayout
+  title="EU GDPR Plain-English Hub | Core Principles, Rights & Enforcement"
+  description="Master the European Union General Data Protection Regulation (GDPR). Understand the 7 principles, 6 lawful bases, data subject rights, and explore country-by-country enforcement."
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Hero -->
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-1.5 rounded border border-slate-300 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
+        European Union Framework
+      </span>
+      <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+        EU GDPR Explained in Plain English
+      </h1>
+      <p class="mt-4 text-base text-slate-600 sm:text-lg leading-relaxed">
+        The General Data Protection Regulation (Regulation (EU) 2016/679) is the gold standard for global privacy law. Here is everything you need to know about its core principles, lawful bases, and national enforcement authorities.
+      </p>
+    </div>
+
+    <!-- Country Specific DPA Hubs Grid -->
+    <div class="mt-12">
+      <div>
+        <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+          Country-Specific Enforcement Hubs
+        </h2>
+        <p class="text-sm text-slate-600 mt-1">
+          Looking for a specific national Data Protection Authority? Explore country-specific rulings:
+        </p>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {dpaHubs.map((hub) => (
+          <a
+            href={hub.slug}
+            class="group flex flex-col justify-between rounded border border-slate-200 bg-white p-6 shadow-sm hover:border-red-900 transition-all"
+          >
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-3xl">{hub.flag}</span>
+                <span class="rounded bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-xs font-semibold text-slate-700">
+                  {hub.casesCount} Explained Cases
+                </span>
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-slate-900 group-hover:text-red-900 transition-colors">
+                {hub.country} Hub
+              </h3>
+              <p class="text-xs font-semibold text-red-900 mt-0.5">
+                {hub.dpa}
+              </p>
+              <p class="mt-2.5 text-xs text-slate-600 leading-relaxed">
+                {hub.focus}
+              </p>
+            </div>
+            <div class="mt-5 flex items-center gap-1 text-xs font-bold text-red-900 group-hover:translate-x-0.5 transition-transform">
+              Explore {hub.country} Decisions →
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Ad Placement Mid -->
+    <AdSlot slotId="gdpr-hub-mid" format="horizontal" />
+
+    <!-- The 7 Core Principles (Article 5) -->
+    <div class="mt-14 rounded border border-slate-200 bg-slate-50 p-8 sm:p-10">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+        The 7 Core GDPR Principles (Article 5)
+      </h2>
+      <p class="mt-2 text-sm text-slate-600 max-w-2xl">
+        Every single GDPR fine and enforcement action traces back to a violation of at least one of these seven fundamental rules:
+      </p>
+
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="font-bold text-red-900 text-sm">1. Lawfulness, Fairness & Transparency</div>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            You must have a legitimate legal ground to process data, treat the person fairly, and explain what you do in plain language.
+          </p>
+        </div>
+
+        <div class="rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="font-bold text-red-900 text-sm">2. Purpose Limitation</div>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            Data collected for one stated reason (e.g. shipping a shoe) cannot be secretly repurposed for another (e.g. marketing ads).
+          </p>
+        </div>
+
+        <div class="rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="font-bold text-red-900 text-sm">3. Data Minimisation</div>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            Collect only the exact data strictly necessary for your purpose. If you don't need phone numbers or dates of birth, don't ask for them.
+          </p>
+        </div>
+
+        <div class="rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="font-bold text-red-900 text-sm">4. Accuracy</div>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            Keep data up to date and correct factual errors quickly. Erroneous records (including AI hallucinations about people) violate accuracy.
+          </p>
+        </div>
+
+        <div class="rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="font-bold text-red-900 text-sm">5. Storage Limitation</div>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            Don't hoard personal data forever. Delete or anonymize data once its original lawful purpose has expired.
+          </p>
+        </div>
+
+        <div class="rounded border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="font-bold text-red-900 text-sm">6. Integrity & Confidentiality (Security)</div>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            Guard personal data with appropriate technical safeguards (encryption, MFA, access controls) against hackers and accidental leaks.
+          </p>
+        </div>
+
+        <div class="col-span-1 sm:col-span-2 lg:col-span-3 rounded border border-red-200 bg-red-50/60 p-5">
+          <div class="font-bold text-red-950 text-sm">7. Accountability (The Master Rule)</div>
+          <p class="mt-2 text-xs text-slate-700 leading-relaxed">
+            You must be able to <strong>prove</strong> compliance at any moment with documentation, impact assessments (DPIAs), vendor contracts, and audit logs. Saying you followed the law is useless if you cannot produce verifiable evidence.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GDPR Cases Section -->
+    <div class="mt-14">
+      <div class="border-b border-slate-200 pb-3">
+        <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+          Featured EU GDPR Case Explainers ({gdprCases.length})
+        </h2>
+      </div>
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {gdprCases.map((entry) => (
+          <CaseCard
+            title={entry.data.title}
+            slug={entry.slug}
+            dpa={entry.data.dpa}
+            country={entry.data.country}
+            fine={entry.data.fine_amount}
+            articles={entry.data.articles_cited}
+            tldr={entry.data.tldr}
+            jurisdiction={entry.data.jurisdiction}
+            category={entry.data.category}
+            isTop5={entry.data.is_top_5}
+            top5Rank={entry.data.top_5_rank}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+

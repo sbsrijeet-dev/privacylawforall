@@ -1,0 +1,93 @@
+---
+// src/components/CaseCard.astro
+interface Props {
+  title: string;
+  slug: string;
+  dpa: string;
+  country: string;
+  fine: string;
+  articles: string[];
+  tldr: string;
+  jurisdiction: string;
+  category: string;
+  isTop5?: boolean;
+  top5Rank?: number;
+}
+
+const {
+  title,
+  slug,
+  dpa,
+  country,
+  fine,
+  articles,
+  tldr,
+  jurisdiction,
+  category,
+  isTop5 = false,
+  top5Rank,
+} = Astro.props;
+---
+
+<article class="group relative flex flex-col justify-between rounded border border-slate-200 bg-white p-6 shadow-sm hover:border-red-800 hover:shadow transition-all duration-150">
+  <div>
+    <!-- Card Header Badges -->
+    <div class="flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        {isTop5 && top5Rank && (
+          <span class="inline-flex items-center gap-1 rounded bg-amber-100 border border-amber-300 px-2 py-0.5 text-xs font-bold text-amber-900">
+            ★ #{top5Rank} All-Time Fine
+          </span>
+        )}
+        <span class="rounded bg-slate-100 border border-slate-200 px-2 py-0.5 text-[11px] font-medium text-slate-700">
+          {category}
+        </span>
+      </div>
+
+      <!-- Fine -->
+      <span class="font-extrabold text-sm text-red-700">
+        {fine}
+      </span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="mt-3 text-lg font-bold tracking-tight text-slate-900 group-hover:text-red-900 transition-colors">
+      <a href={`/cases/${slug}`}>
+        <span class="absolute inset-0"></span>
+        {title}
+      </a>
+    </h3>
+
+    <!-- TL;DR -->
+    <p class="mt-2.5 text-sm text-slate-600 line-clamp-3 leading-relaxed">
+      {tldr}
+    </p>
+  </div>
+
+  <div class="mt-6 border-t border-slate-200 pt-4">
+    <div class="flex items-center justify-between text-xs text-slate-500">
+      <div>
+        <span class="font-semibold text-slate-800">{dpa}</span> ({country})
+      </div>
+      <div class="flex items-center gap-1 font-semibold text-red-900 group-hover:translate-x-0.5 transition-transform">
+        Read Explainer
+        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Article Badges -->
+    <div class="mt-2.5 flex flex-wrap gap-1">
+      {articles.slice(0, 3).map((art) => (
+        <span class="rounded bg-slate-100 border border-slate-200 px-1.5 py-0.5 font-mono text-[10px] font-medium text-slate-700">
+          {art}
+        </span>
+      ))}
+      {articles.length > 3 && (
+        <span class="text-[10px] text-slate-500 self-center font-medium">+{articles.length - 3} more</span>
+      )}
+    </div>
+  </div>
+</article>
+

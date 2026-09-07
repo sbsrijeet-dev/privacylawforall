@@ -1,0 +1,236 @@
+---
+// src/pages/index.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CaseCard from '../components/CaseCard.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+const allCases = await getCollection('cases');
+
+// Featured cases: Top 5 cases + latest
+const top5Cases = allCases
+  .filter((c) => c.data.is_top_5 && c.data.top_5_rank)
+  .sort((a, b) => (a.data.top_5_rank || 0) - (b.data.top_5_rank || 0))
+  .slice(0, 3);
+
+const recentCases = allCases
+  .filter((c) => !c.data.is_top_5)
+  .slice(0, 6);
+---
+
+<BaseLayout
+  title="PrivacyLaw.free — Privacy law, made accessible to all for free, in one place"
+  description="A free, no-login, no-paywall explainer blog breaking down landmark privacy law cases, fines, and regulations across EU GDPR, India DPDPA, and the EU AI Act."
+>
+  <!-- Hero Section -->
+  <section class="border-b border-slate-200 bg-white px-4 py-14 sm:px-6 sm:py-18 lg:px-8">
+    <div class="mx-auto max-w-5xl text-center">
+      <!-- Motto Badge -->
+      <div class="inline-flex items-center gap-2 rounded border border-slate-300 bg-slate-50 px-3.5 py-1 text-xs font-semibold text-slate-700">
+        <span class="flex h-2 w-2 rounded-full bg-red-900"></span>
+        No Login • No Paywall • Free Forever
+      </div>
+
+      <!-- Main Motto Headline -->
+      <h1 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-tight">
+        Privacy law, made <span class="text-red-900 underline decoration-red-900/30">accessible to all</span> for free, in one place.
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-base text-slate-600 sm:text-lg leading-relaxed">
+        Understand high-stakes privacy cases, multi-million-euro fines, and emerging AI regulations in <strong>plain, jargon-free English</strong>. Every factual claim is programmatically cross-verified against official regulatory records.
+      </p>
+
+      <!-- Quick Action Buttons -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/top-5"
+          class="rounded bg-red-900 px-5 py-2.5 text-sm font-bold text-white hover:bg-red-950 transition-colors shadow-sm"
+        >
+          Top 5 Biggest Fines
+        </a>
+        <a
+          href="/cases"
+          class="rounded border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50 transition-colors"
+        >
+          Browse All Cases
+        </a>
+      </div>
+
+      <!-- Live Database & Credibility Stats -->
+      <div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 max-w-3xl mx-auto pt-6 border-t border-slate-200">
+        <div class="p-2">
+          <div class="text-2xl sm:text-3xl font-bold text-slate-900">63,020</div>
+          <div class="text-[11px] text-slate-500 font-medium mt-0.5">Database Records</div>
+        </div>
+        <div class="p-2">
+          <div class="text-2xl sm:text-3xl font-bold text-red-900">€2.9B+</div>
+          <div class="text-[11px] text-slate-500 font-medium mt-0.5">Top Fines Tracked</div>
+        </div>
+        <div class="p-2">
+          <div class="text-2xl sm:text-3xl font-bold text-slate-900">4</div>
+          <div class="text-[11px] text-slate-500 font-medium mt-0.5">Major Jurisdictions</div>
+        </div>
+        <div class="p-2">
+          <div class="text-2xl sm:text-3xl font-bold text-slate-900">0%</div>
+          <div class="text-[11px] text-slate-500 font-medium mt-0.5">Paywalls or Logins</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-14 bg-white">
+    <!-- Top Ad Placement -->
+    <AdSlot slotId="home-leaderboard" format="horizontal" />
+
+    <!-- Landmark Top 5 Banner Showcase -->
+    <div class="rounded border border-slate-200 bg-slate-50 p-8 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div class="space-y-2">
+          <span class="inline-flex items-center gap-1.5 rounded bg-amber-100 border border-amber-300 px-2.5 py-0.5 text-xs font-bold text-amber-900">
+            ★ Historic Enforcement Milestones
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+            The Top 5 Biggest GDPR Fines in History
+          </h2>
+          <p class="text-sm text-slate-600 max-w-xl leading-relaxed">
+            Meta (€1.2B), Amazon (€746M), Instagram (€405M), TikTok (€345M), and WhatsApp (€225M). See the full breakdown of how each tech giant got caught and what rules they violated.
+          </p>
+        </div>
+        <a
+          href="/top-5"
+          class="shrink-0 rounded bg-red-900 px-6 py-3 text-sm font-bold text-white hover:bg-red-950 transition-colors text-center"
+        >
+          View The Top 5 →
+        </a>
+      </div>
+
+      <!-- Top 3 Preview Grid -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        {top5Cases.map((c) => (
+          <a
+            href={`/cases/${c.slug}`}
+            class="group rounded border border-slate-200 bg-white p-5 shadow-sm hover:border-red-900 transition-all"
+          >
+            <div class="flex items-center justify-between">
+              <span class="flex h-6 w-6 items-center justify-center rounded bg-amber-600 text-white font-bold text-xs">
+                #{c.data.top_5_rank}
+              </span>
+              <span class="font-extrabold text-xs text-red-700">
+                {c.data.fine_amount}
+              </span>
+            </div>
+            <h3 class="mt-3 text-sm font-bold text-slate-900 group-hover:text-red-900 transition-colors">
+              {c.data.popular_name}
+            </h3>
+            <p class="mt-2 text-xs text-slate-600 line-clamp-2 leading-relaxed">
+              {c.data.tldr}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Jurisdiction Hubs Exploration Grid -->
+    <div>
+      <div>
+        <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+          Explore by Jurisdiction & Framework
+        </h2>
+        <p class="text-sm text-slate-600 mt-1">
+          Navigate statutory principles, national DPAs, and landmark rulings across major regions:
+        </p>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- EU GDPR -->
+        <a
+          href="/gdpr"
+          class="group rounded border border-slate-200 bg-white p-6 shadow-sm hover:border-red-900 transition-all"
+        >
+          <div class="text-3xl">🇪🇺</div>
+          <h3 class="mt-3 text-lg font-bold text-slate-900 group-hover:text-red-900 transition-colors">
+            European Union GDPR Hub
+          </h3>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            The complete guide to the 7 core principles (Article 5), 6 lawful bases (Article 6), and national hubs for Spain, France, Ireland, Italy, and the UK.
+          </p>
+          <div class="mt-4 text-xs font-semibold text-red-900">
+            Explore EU GDPR →
+          </div>
+        </a>
+
+        <!-- India DPDPA -->
+        <a
+          href="/dpdpa"
+          class="group rounded border border-slate-200 bg-white p-6 shadow-sm hover:border-red-900 transition-all"
+        >
+          <div class="text-3xl">🇮🇳</div>
+          <h3 class="mt-3 text-lg font-bold text-slate-900 group-hover:text-red-900 transition-colors">
+            India DPDPA 2023 Hub
+          </h3>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            Master the Digital Personal Data Protection Act: Consent Managers, Significant Data Fiduciaries, child data bans, and ₹250 Crore penalties.
+          </p>
+          <div class="mt-4 text-xs font-semibold text-red-900">
+            Explore India DPDPA →
+          </div>
+        </a>
+
+        <!-- EU AI Act -->
+        <a
+          href="/eu-ai-act"
+          class="group rounded border border-slate-200 bg-white p-6 shadow-sm hover:border-red-900 transition-all"
+        >
+          <div class="text-3xl">🤖</div>
+          <h3 class="mt-3 text-lg font-bold text-slate-900 group-hover:text-red-900 transition-colors">
+            EU AI Act Hub
+          </h3>
+          <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+            Understand the world's first comprehensive AI regulation: the 4-tier risk classification, prohibited AI, and up to 7% global revenue fines.
+          </p>
+          <div class="mt-4 text-xs font-semibold text-red-900">
+            Explore EU AI Act →
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Latest Explained Cases -->
+    <div>
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+            Recent Case Explainers
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Freshly verified plain-English breakdowns of regulatory decisions:
+          </p>
+        </div>
+        <a href="/cases" class="text-xs font-bold text-red-900 hover:underline">
+          View All ({allCases.length}) →
+        </a>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {recentCases.map((entry) => (
+          <CaseCard
+            title={entry.data.title}
+            slug={entry.slug}
+            dpa={entry.data.dpa}
+            country={entry.data.country}
+            fine={entry.data.fine_amount}
+            articles={entry.data.articles_cited}
+            tldr={entry.data.tldr}
+            jurisdiction={entry.data.jurisdiction}
+            category={entry.data.category}
+            isTop5={entry.data.is_top_5}
+            top5Rank={entry.data.top_5_rank}
+          />
+        ))}
+      </div>
+    </div>
+
+    <!-- Mid Page Ad Placement -->
+    <AdSlot slotId="home-bottom-placement" format="horizontal" />
+  </div>
+</BaseLayout>

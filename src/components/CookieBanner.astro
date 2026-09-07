@@ -1,0 +1,67 @@
+---
+// src/components/CookieBanner.astro
+---
+
+<div
+  id="cookie-consent-banner"
+  class="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-3xl rounded-xl border border-slate-300 bg-white p-5 shadow-2xl transition-all duration-300 transform translate-y-0"
+  style="display: none;"
+>
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex h-2 w-2 rounded-full bg-emerald-600"></span>
+        <h4 class="text-sm font-bold text-slate-900">
+          Privacy-First Consent (Zero Tracking by Default)
+        </h4>
+      </div>
+      <p class="text-xs text-slate-600 leading-relaxed max-w-xl">
+        We practice what we explain. This site sets <strong>zero tracking or analytics cookies</strong> by default. We use non-personalized programmatic advertising (via Google AdSense) to keep all guides free for everyone. By browsing this site, you acknowledge our <a href="/terms" class="underline text-brand-700 font-medium">Terms of Use</a>, <a href="/disclaimer" class="underline text-brand-700 font-medium">Disclaimer</a>, and <a href="/privacy" class="underline text-brand-700 font-medium">Privacy Policy</a>.
+      </p>
+    </div>
+
+    <div class="flex shrink-0 items-center gap-2 sm:self-center">
+      <button
+        id="reject-cookie-btn"
+        type="button"
+        class="rounded-lg border border-slate-300 px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+      >
+        Essential Only
+      </button>
+      <button
+        id="accept-cookie-btn"
+        type="button"
+        class="rounded-lg bg-brand-700 px-3.5 py-2 text-xs font-semibold text-white shadow hover:bg-brand-800 transition-colors"
+      >
+        Accept & Support Free Access
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('cookie-consent-banner');
+    const acceptBtn = document.getElementById('accept-cookie-btn');
+    const rejectBtn = document.getElementById('reject-cookie-btn');
+
+    const consent = localStorage.getItem('privacy-law-cookie-consent');
+    if (!consent) {
+      if (banner) banner.style.display = 'block';
+    }
+
+    acceptBtn?.addEventListener('click', () => {
+      localStorage.setItem('privacy-law-cookie-consent', 'accepted');
+      if (banner) banner.style.display = 'none';
+      // Trigger AdSense personalized ads if permitted
+      if (window.adsbygoogle) {
+        // consent granted
+      }
+    });
+
+    rejectBtn?.addEventListener('click', () => {
+      localStorage.setItem('privacy-law-cookie-consent', 'essential_only');
+      if (banner) banner.style.display = 'none';
+    });
+  });
+</script>

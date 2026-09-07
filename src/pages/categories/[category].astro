@@ -1,0 +1,131 @@
+---
+// src/pages/categories/[category].astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { CATEGORIES, type CategoryMeta } from '../../utils/categories';
+
+export async function getStaticPaths() {
+  const allCases = await getCollection('cases');
+  return CATEGORIES.map((cat) => {
+    const categoryCases = allCases.filter((c) => c.data.category === cat.slug);
+    return {
+      params: { category: cat.slug },
+      props: { categoryMeta: cat, cases: categoryCases },
+    };
+  });
+}
+
+interface Props {
+  categoryMeta: CategoryMeta;
+  cases: any[];
+}
+
+const { categoryMeta, cases } = Astro.props;
+
+// Other categories for sidebar / bottom navigation
+const otherCategories = CATEGORIES.filter((c) => c.slug !== categoryMeta.slug);
+---
+
+<BaseLayout
+  title={`${categoryMeta.name} Cases & Fines | PrivacyLaw.free`}
+  description={categoryMeta.description}
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex items-center space-x-2 text-xs text-slate-500">
+      <a href="/" class="hover:text-red-900">Home</a>
+      <span>/</span>
+      <a href="/categories" class="hover:text-red-900">Categories</a>
+      <span>/</span>
+      <span class="text-slate-900 font-medium">{categoryMeta.shortName}</span>
+    </nav>
+
+    <!-- Category Header -->
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3">
+        <span class="text-4xl">{categoryMeta.icon}</span>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-900">
+            Thematic Case Collection
+          </span>
+          <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            {categoryMeta.name}
+          </h1>
+        </div>
+      </div>
+      <p class="mt-4 text-base text-slate-600 leading-relaxed">
+        {categoryMeta.description}
+      </p>
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        <span class="rounded bg-slate-100 border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700">
+          Exam Domain: {categoryMeta.examDomain}
+        </span>
+        <span class="rounded bg-red-50 border border-red-200 px-2.5 py-1 text-xs font-bold text-red-900">
+          {cases.length} Verified Decisions
+        </span>
+      </div>
+    </div>
+
+    <!-- Top Ad Placement -->
+    <AdSlot slotId={`cat-${categoryMeta.slug}-top`} format="horizontal" />
+
+    <!-- Cases Grid -->
+    <div class="mt-8">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <h2 class="text-xl font-bold text-slate-900">
+          Verified Case Explainers in this Collection
+        </h2>
+        <span class="text-xs text-slate-500">
+          Showing all {cases.length} decisions
+        </span>
+      </div>
+
+      {cases.length > 0 ? (
+        <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {cases.map((entry) => (
+            <CaseCard
+              title={entry.data.title}
+              slug={entry.slug}
+              dpa={entry.data.dpa}
+              country={entry.data.country}
+              fine={entry.data.fine_amount}
+              articles={entry.data.articles_cited}
+              tldr={entry.data.tldr}
+              jurisdiction={entry.data.jurisdiction}
+              category={entry.data.category}
+              isTop5={entry.data.is_top_5}
+              top5Rank={entry.data.top_5_rank}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-8 text-center text-sm text-slate-500">
+          No case explainers currently published in this category. Check back soon as our 3-day update pipeline adds new decisions.
+        </div>
+      )}
+    </div>
+
+    <!-- Related Categories -->
+    <div class="mt-16 border-t border-slate-200 pt-8">
+      <h3 class="text-lg font-bold text-slate-900 mb-4">
+        Explore Other Categories
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        {otherCategories.map((c) => (
+          <a
+            href={`/categories/${c.slug}`}
+            class="flex items-center gap-2 rounded border border-slate-200 bg-white p-3 text-xs font-semibold text-slate-700 hover:border-red-900 hover:text-red-900 transition-colors"
+          >
+            <span>{c.icon}</span>
+            <span class="truncate">{c.shortName}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Bottom Ad Placement -->
+    <AdSlot slotId={`cat-${categoryMeta.slug}-bottom`} format="horizontal" />
+  </div>
+</BaseLayout>

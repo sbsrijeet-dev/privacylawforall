@@ -1,0 +1,206 @@
+---
+// src/pages/cases/index.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+
+const allCases = await getCollection('cases');
+// Sort: Top 5 first (by rank), then by year descending
+const sortedCases = allCases.sort((a, b) => {
+  if (a.data.is_top_5 && b.data.is_top_5) {
+    return (a.data.top_5_rank || 99) - (b.data.top_5_rank || 99);
+  }
+  if (a.data.is_top_5) return -1;
+  if (b.data.is_top_5) return 1;
+  return b.data.year - a.data.year;
+});
+
+const jurisdictions = ['All', 'EU GDPR', 'UK GDPR', 'DPDPA', 'EU AI ACT'];
+const categories = [
+  'All',
+  'Cross-Border Transfers',
+  'Children\'s Privacy',
+  'Targeted Ads & Profiling',
+  'Consent & Dark Patterns',
+  'Security & Data Breaches',
+  'AI & Scraping',
+];
+---
+
+<BaseLayout
+  title="Privacy Law Cases Directory | Plain-English Decision Explainers"
+  description="Explore our curated directory of landmark privacy enforcement decisions and regulatory actions across GDPR, DPDPA, and the EU AI Act, factually verified and explained in plain English."
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Header -->
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-1.5 rounded border border-slate-300 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
+        <svg class="h-3.5 w-3.5 text-red-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Fact-Checked Decision Library
+      </span>
+      <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+        Privacy Law Cases Directory
+      </h1>
+      <p class="mt-3 text-base text-slate-600 leading-relaxed">
+        Every case breakdown explains what happened, what rule was broken, and why the fine was issued—in plain, accessible English. Every data point is programmatically cross-verified against official regulatory records.
+      </p>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="mt-8 rounded border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+      <!-- Search Input -->
+      <div class="relative">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search by case name, company, DPA (e.g. Meta, DPC, CNIL, AEPD, Garante, ICO), fine, or article..."
+          class="block w-full rounded border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 placeholder-slate-400 focus:border-red-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-red-900 transition-colors"
+        />
+      </div>
+
+      <!-- Filter Buttons: Jurisdictions -->
+      <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 mr-2">Jurisdiction:</span>
+        {jurisdictions.map((j) => (
+          <button
+            type="button"
+            data-filter-jurisdiction={j}
+            class={`filter-btn-jurisdiction rounded px-3 py-1 text-xs font-semibold transition-colors ${
+              j === 'All'
+                ? 'bg-red-900 text-white'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
+            }`}
+          >
+            {j}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Ad Placement Top -->
+    <AdSlot slotId="directory-top-horizontal" format="horizontal" />
+
+    <!-- Cases Grid -->
+    <div id="cases-grid" class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {sortedCases.map((entry) => (
+        <div
+          class="case-item"
+          data-title={entry.data.title.toLowerCase()}
+          data-case-name={entry.data.case_name.toLowerCase()}
+          data-dpa={entry.data.dpa.toLowerCase()}
+          data-country={entry.data.country.toLowerCase()}
+          data-jurisdiction={entry.data.jurisdiction}
+          data-category={entry.data.category}
+          data-articles={entry.data.articles_cited.join(' ').toLowerCase()}
+        >
+          <CaseCard
+            title={entry.data.title}
+            slug={entry.slug}
+            dpa={entry.data.dpa}
+            country={entry.data.country}
+            fine={entry.data.fine_amount}
+            articles={entry.data.articles_cited}
+            tldr={entry.data.tldr}
+            jurisdiction={entry.data.jurisdiction}
+            category={entry.data.category}
+            isTop5={entry.data.is_top_5}
+            top5Rank={entry.data.top_5_rank}
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- No results state -->
+    <div id="no-results" class="hidden my-16 text-center">
+      <p class="text-base font-medium text-slate-500">
+        No case explainers found matching your search.
+      </p>
+      <button
+        id="reset-filter-btn"
+        class="mt-3 text-sm font-semibold text-red-900 hover:underline"
+      >
+        Clear filters and show all cases
+      </button>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const caseItems = document.querySelectorAll('.case-item');
+    const noResults = document.getElementById('no-results');
+    const resetBtn = document.getElementById('reset-filter-btn');
+    const jurisdictionBtns = document.querySelectorAll('.filter-btn-jurisdiction');
+
+    let currentJurisdiction = 'All';
+
+    function filterCases() {
+      const q = searchInput?.value.toLowerCase().trim() || '';
+      let visibleCount = 0;
+
+      caseItems.forEach((item) => {
+        const title = item.getAttribute('data-title') || '';
+        const caseName = item.getAttribute('data-case-name') || '';
+        const dpa = item.getAttribute('data-dpa') || '';
+        const country = item.getAttribute('data-country') || '';
+        const jurisdiction = item.getAttribute('data-jurisdiction') || '';
+        const articles = item.getAttribute('data-articles') || '';
+
+        const matchesQuery = !q || title.includes(q) || caseName.includes(q) || dpa.includes(q) || country.includes(q) || articles.includes(q);
+        const matchesJurisdiction = currentJurisdiction === 'All' || jurisdiction === currentJurisdiction;
+
+        if (matchesQuery && matchesJurisdiction) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    searchInput?.addEventListener('input', filterCases);
+
+    jurisdictionBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        jurisdictionBtns.forEach((b) => {
+          b.classList.remove('bg-red-900', 'text-white');
+          b.classList.add('bg-slate-100', 'text-slate-700');
+        });
+        btn.classList.add('bg-red-900', 'text-white');
+        btn.classList.remove('bg-slate-100', 'text-slate-700');
+
+        currentJurisdiction = btn.getAttribute('data-filter-jurisdiction') || 'All';
+        filterCases();
+      });
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      currentJurisdiction = 'All';
+      jurisdictionBtns.forEach((b) => {
+        if (b.getAttribute('data-filter-jurisdiction') === 'All') {
+          b.classList.add('bg-red-900', 'text-white');
+          b.classList.remove('bg-slate-100', 'text-slate-700');
+        } else {
+          b.classList.remove('bg-red-900', 'text-white');
+          b.classList.add('bg-slate-100', 'text-slate-700');
+        }
+      });
+      filterCases();
+    });
+  });
+</script>
+

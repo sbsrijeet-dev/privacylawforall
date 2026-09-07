@@ -1,0 +1,277 @@
+---
+// src/pages/compliance-mistakes.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+interface Mistake {
+  rank: number;
+  title: string;
+  subtitle: string;
+  caseSlug: string;
+  caseName: string;
+  fine: string;
+  dpa: string;
+  legalArticle: string;
+  faultSummary: string;
+  whyRegulatorsFine: string;
+  engineeringTakeaway: string;
+}
+
+const MISTAKES: Mistake[] = [
+  {
+    rank: 1,
+    title: 'Asymmetric Cookie Consent ("Reject All" Buried or Missing)',
+    subtitle: 'Making refusal take more clicks than acceptance is an illegal dark pattern.',
+    caseSlug: 'google-france-cookie-refusal',
+    caseName: 'Google France Cookie Dark Patterns Ruling',
+    fine: '€150,000,000',
+    dpa: 'CNIL (France)',
+    legalArticle: 'Article 82 French Data Protection Act & Article 7 GDPR',
+    faultSummary: 'Google provided an immediate "Accept All" button on the first modal layer, but required users to click into a sub-menu and toggle off individual checkboxes to refuse tracking cookies.',
+    whyRegulatorsFine: 'Under Article 7(3) GDPR and the ePrivacy Directive, withdrawing or refusing consent must be just as easy as giving it. Friction-inducing refusal paths are classified as unlawful manipulative steering.',
+    engineeringTakeaway: 'Always implement side-by-side "Accept All" and "Reject All" buttons with equal visual contrast and identical click depths.',
+  },
+  {
+    rank: 2,
+    title: 'Bundling Consent with Core Terms of Service',
+    subtitle: 'Tying access to a banking service to forced marketing profiling.',
+    caseSlug: 'caixabank-customer-consent',
+    caseName: 'CaixaBank Customer Profiling Decision',
+    fine: '€6,000,000',
+    dpa: 'AEPD (Spain)',
+    legalArticle: 'Article 6 & Article 7(4) GDPR (Freely Given Consent)',
+    faultSummary: 'CaixaBank required customers opening ordinary bank accounts to consent to multi-entity commercial profiling and cross-company data sharing as a bundled, non-negotiable contract clause.',
+    whyRegulatorsFine: 'Article 7(4) prohibits "tying"—conditioning contract execution or service delivery on consent to process data unnecessary for that specific service.',
+    engineeringTakeaway: 'Keep service contracts and marketing/profiling consent strictly segregated. Marketing consent must always remain an optional, unbundled checkbox.',
+  },
+  {
+    rank: 3,
+    title: 'Neglecting M&A Cybersecurity Due Diligence',
+    subtitle: 'Inheriting legacy vulnerabilities from acquired corporate infrastructure.',
+    caseSlug: 'marriott-guest-reservation-breach',
+    caseName: 'Marriott Starwood Legacy Breach Penalty',
+    fine: '£18,400,000',
+    dpa: 'Information Commissioner\'s Office (ICO, UK)',
+    legalArticle: 'Article 32 GDPR (Security of Processing)',
+    faultSummary: 'Marriott acquired Starwood Hotels in 2016 without auditing its IT infrastructure, failing to detect an active hacker backdoor in the Starwood reservation system for over two years.',
+    whyRegulatorsFine: 'When acquiring a company, the buyer inherits full legal accountability for the acquired databases. Failure to conduct thorough security audits breaches Article 32.',
+    engineeringTakeaway: 'Prior to merging corporate networks or databases, perform independent penetration testing, database integrity scans, and privileged access audits.',
+  },
+  {
+    rank: 4,
+    title: 'Supply-Chain Code Injection & Missing Multi-Factor Authentication',
+    subtitle: 'Unmonitored third-party JavaScript on payment checkouts.',
+    caseSlug: 'british-airways-credential-breach',
+    caseName: 'British Airways Magecart Data Breach',
+    fine: '£20,000,000',
+    dpa: 'Information Commissioner\'s Office (ICO, UK)',
+    legalArticle: 'Article 5(1)(f) & Article 32 GDPR (Integrity & Confidentiality)',
+    faultSummary: 'Attackers accessed British Airways systems through compromised third-party contractor credentials lacking MFA, modifying a 22-line JavaScript script on the checkout page to harvest 400,000 payment cards.',
+    whyRegulatorsFine: 'Failing to enforce multi-factor authentication on third-party access gateways and failing to implement Subresource Integrity (SRI) checks on production payment pages constitutes gross security negligence.',
+    engineeringTakeaway: 'Enforce MFA across all vendor access, lock down checkout forms with Content Security Policy (CSP), and use Subresource Integrity (SRI) on external scripts.',
+  },
+  {
+    rank: 5,
+    title: 'Telemarketing Without Cross-Checking Opt-Out Registries',
+    subtitle: 'Cold-calling consumers listed on statutory do-not-call registries.',
+    caseSlug: 'vodafone-spain-telemarketing',
+    caseName: 'Vodafone Spain Outsourced Telemarketing Sanction',
+    fine: '€8,150,000',
+    dpa: 'Agencia Española de Protección de Datos (AEPD, Spain)',
+    legalArticle: 'Article 6, Article 28, & Article 48 GDPR',
+    faultSummary: 'Vodafone used dozens of outsourced call-center contractors who called thousands of consumers registered on Spain\'s "Lista Robinson" opt-out registry using procured lead lists.',
+    whyRegulatorsFine: 'The right to object to direct marketing (Article 21) is absolute. Controllers are strictly vicariously liable for the actions of their telemarketing contractors.',
+    engineeringTakeaway: 'Implement automated, real-time API verification against national opt-out registries before any outbound marketing campaign or call dialling sequence triggers.',
+  },
+  {
+    rank: 6,
+    title: 'Mass Web Scraping Without Legal Basis for AI Model Training',
+    subtitle: 'Assuming public internet data is legally free for commercial algorithms.',
+    caseSlug: 'clearview-ai-facial-scraping',
+    caseName: 'Clearview AI Biometric Scraping Ban',
+    fine: '£7,552,800',
+    dpa: 'Information Commissioner\'s Office (ICO, UK)',
+    legalArticle: 'Article 6 & Article 9 GDPR (Special Category Biometrics)',
+    faultSummary: 'Clearview scraped over 20 billion photos from public social media profiles to construct a facial recognition search engine without user knowledge or consent.',
+    whyRegulatorsFine: 'Publicly accessible data remains personal data. Extracting biometric identifiers without explicit consent violates Article 9, and companies cannot claim legitimate interests for mass surveillance.',
+    engineeringTakeaway: 'Never train commercial machine learning models on scraped personal data without a robust, documented legal basis and transparent notice under Article 14.',
+  },
+  {
+    rank: 7,
+    title: 'Public-by-Default Privacy Settings on Minor Accounts',
+    subtitle: 'Failing to implement privacy by design for children and teenagers.',
+    caseSlug: 'instagram-teen-privacy',
+    caseName: 'Instagram Teenage Data Settings Decision',
+    fine: '€405,000,000',
+    dpa: 'Data Protection Commission (DPC, Ireland)',
+    legalArticle: 'Article 5(1)(c), Article 6, Article 12, & Article 25 GDPR',
+    faultSummary: 'Teenagers switching to Instagram business accounts had their private mobile numbers and email addresses exposed publicly by default to any internet user.',
+    whyRegulatorsFine: 'Article 25 mandates Privacy by Default. For underage users, social platforms must default to the strictest privacy configurations available.',
+    engineeringTakeaway: 'For any user under 18, default profiles, direct messaging, and contact information to private mode, requiring explicit parental or conscious opt-in to expose.',
+  },
+  {
+    rank: 8,
+    title: 'Opaque, Vague, and Fragmented Privacy Notices',
+    subtitle: 'Using circular, multi-layered policies that conceal third-party data sharing.',
+    caseSlug: 'whatsapp-transparency',
+    caseName: 'WhatsApp Ireland Transparency Penalty',
+    fine: '€225,000,000',
+    dpa: 'Data Protection Commission (DPC, Ireland)',
+    legalArticle: 'Article 12, Article 13, & Article 14 GDPR',
+    faultSummary: 'WhatsApp provided vague, circular privacy notices that failed to clearly explain how European user metadata was shared with Meta family companies for infrastructure and advertising.',
+    whyRegulatorsFine: 'Articles 12 and 13 require concrete, plain-English explanations of data recipients and processing purposes. Passive generalities ("we may share data with partners") are strictly non-compliant.',
+    engineeringTakeaway: 'Write privacy policies with clear tables: explicit data fields, specific legal bases, concrete retention periods, and named recipient categories.',
+  },
+  {
+    rank: 9,
+    title: 'Transfers to Third Countries Without Supplementary Safeguards',
+    subtitle: 'Relying on Standard Contractual Clauses without evaluating foreign surveillance laws.',
+    caseSlug: 'meta-ireland-data-transfers',
+    caseName: 'Meta Ireland Transatlantic Data Transfer Ban',
+    fine: '€1,200,000,000',
+    dpa: 'Data Protection Commission (DPC, Ireland)',
+    legalArticle: 'Article 46(1) & Article 83 GDPR (Chapter V Transfers)',
+    faultSummary: 'Meta transferred massive volumes of European user data to US servers under standard contractual clauses (SCCs) despite US surveillance laws (FISA Section 702) enabling broad government access.',
+    whyRegulatorsFine: 'Post-Schrems II, SCCs are ineffective if foreign state intelligence laws can compel access to unencrypted personal data without judicial remedy.',
+    engineeringTakeaway: 'Implement end-to-end encryption where encryption keys are held exclusively within the EEA, or store European user data in sovereign regional cloud regions.',
+  },
+  {
+    rank: 10,
+    title: 'Pre-Ticked Checkboxes & Inferred Assent',
+    subtitle: 'Treating user inaction or silence as valid legal permission.',
+    caseSlug: 'amazon-luxembourg-profiling',
+    caseName: 'Amazon Luxembourg Forced Behavioral Profiling Fine',
+    fine: '€746,000,000',
+    dpa: 'CNPD (Luxembourg)',
+    legalArticle: 'Article 6(1)(a) & Article 7 GDPR (Consent Standards)',
+    faultSummary: 'Amazon constructed massive behavioral advertising profiles across its customer base by inferring consent from website browsing and pre-selected account preferences.',
+    whyRegulatorsFine: 'Recital 32 of the GDPR states unequivocally: silence, pre-ticked boxes, or inactivity should not constitute consent. Consent must be a positive, conscious affirmative action.',
+    engineeringTakeaway: 'All consent checkmarks and toggle switches must start in an unchecked/OFF state. Never infer consent from page scrolling or continuing to use a service.',
+  },
+];
+---
+
+<BaseLayout
+  title="10 Most Common Compliance Mistakes & Landmark Fines | PrivacyLaw.free"
+  description="Learn from multi-million-euro GDPR enforcement disasters: the 10 most expensive compliance traps, real-world case precedents, and concrete engineering takeaways."
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex items-center space-x-2 text-xs text-slate-500">
+      <a href="/" class="hover:text-red-900">Home</a>
+      <span>/</span>
+      <span class="text-slate-900 font-medium">Compliance Mistakes</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="max-w-4xl">
+      <span class="inline-flex items-center gap-1.5 rounded border border-red-300 bg-red-50 px-3 py-1 text-xs font-bold text-red-900">
+        Flagship Practical Synthesis
+      </span>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl leading-tight">
+        10 Most Common (and Expensive) Privacy Compliance Mistakes
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+        Over €3.5 Billion in GDPR penalties have been issued across Europe. The vast majority of these catastrophic sanctions stem not from sophisticated zero-day exploits, but from <strong>the same 10 recurring compliance faults</strong>. Below is what went wrong, why regulators issued fines, and how engineering teams can avoid them.
+      </p>
+    </div>
+
+    <!-- Ad Placement Top -->
+    <AdSlot slotId="compliance-mistakes-top" format="horizontal" />
+
+    <!-- Mistake Cards Stream -->
+    <div class="mt-12 space-y-12">
+      {MISTAKES.map((m) => (
+        <section
+          id={`mistake-${m.rank}`}
+          class="rounded-xl border border-slate-300 bg-white p-6 sm:p-8 shadow-sm"
+        >
+          <!-- Header Row -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-200 pb-4">
+            <div class="flex items-center gap-3">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-900 text-white font-bold text-lg">
+                #{m.rank}
+              </span>
+              <div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+                  {m.title}
+                </h2>
+                <p class="text-xs text-slate-500 font-medium">
+                  {m.subtitle}
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 self-start sm:self-auto">
+              <span class="rounded bg-red-50 border border-red-200 px-3 py-1 text-xs font-extrabold text-red-900">
+                Penalty: {m.fine}
+              </span>
+            </div>
+          </div>
+
+          <!-- Case Reference Banner -->
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-slate-50 border border-slate-200 p-3 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-900">Landmark Precedent:</span>
+              <a href={`/cases/${m.caseSlug}`} class="font-semibold text-red-900 underline hover:text-red-950">
+                {m.caseName}
+              </a>
+              <span class="text-slate-400">•</span>
+              <span class="text-slate-600">{m.dpa}</span>
+            </div>
+            <span class="font-mono text-[11px] text-slate-500">
+              {m.legalArticle}
+            </span>
+          </div>
+
+          <!-- Breakdown Grid -->
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed">
+            <div class="space-y-3">
+              <div>
+                <h4 class="font-bold text-slate-900 uppercase tracking-wider text-[11px]">
+                  What Happened (The Fault):
+                </h4>
+                <p class="text-slate-700 mt-1">
+                  {m.faultSummary}
+                </p>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 uppercase tracking-wider text-[11px]">
+                  Why Regulators Fined:
+                </h4>
+                <p class="text-slate-700 mt-1">
+                  {m.whyRegulatorsFine}
+                </p>
+              </div>
+            </div>
+
+            <!-- Engineering Takeaway Box -->
+            <div class="rounded-lg border border-emerald-300 bg-emerald-50/50 p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 text-emerald-900 font-bold text-xs">
+                  <svg class="h-4 w-4 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Engineering & Compliance Rule of Thumb:</span>
+                </div>
+                <p class="mt-2.5 text-xs text-emerald-950 font-medium leading-relaxed">
+                  {m.engineeringTakeaway}
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-emerald-200">
+                <a
+                  href={`/cases/${m.caseSlug}`}
+                  class="text-[11px] font-bold text-red-900 hover:underline inline-flex items-center gap-1"
+                >
+                  Read full explainer for this case →
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Bottom Ad Placement -->
+    <AdSlot slotId="compliance-mistakes-bottom" format="horizontal" />
+  </div>
+</BaseLayout>

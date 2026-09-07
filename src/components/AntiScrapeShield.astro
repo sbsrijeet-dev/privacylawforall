@@ -1,0 +1,192 @@
+---
+// src/components/AntiScrapeShield.astro
+// Comprehensive Anti-Scraping, Anti-Bot & Content Protection Shield
+---
+
+<!-- 1. Honeypot Trap for Headless DOM Scrapers (Hidden from human eyes) -->
+<div class="scraper-honeypot-trap" style="position: absolute; left: -9999px; top: -9999px; height: 0; width: 0; overflow: hidden; opacity: 0;" aria-hidden="true">
+  <a href="/security/trap" rel="nofollow" tabindex="-1" class="bot-trap-link">Regulatory Archive Raw JSON Dataset Feed</a>
+  <input type="text" name="bot_honey_field" tabindex="-1" value="" autocomplete="off" />
+</div>
+
+<!-- 2. Anti-Scraping Security Overlay (Triggered only when headless/automated bot driver is detected) -->
+<div
+  id="anti-scrape-shield-modal"
+  class="fixed inset-0 z-[9999999] hidden items-center justify-center bg-black/85 p-4 text-center backdrop-blur-sm"
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="anti-scrape-title"
+>
+  <div class="relative w-full max-w-md rounded-xl border border-red-300 bg-white p-6 shadow-2xl text-left">
+    <div class="flex items-center gap-3">
+      <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100 text-red-900 font-bold">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <div>
+        <h3 id="anti-scrape-title" class="text-base font-bold text-slate-900">
+          Automated Scraping Shield Active
+        </h3>
+        <p class="text-xs text-red-900 font-semibold">
+          Security Threat Defense
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-4 space-y-2 text-xs text-slate-700 leading-relaxed">
+      <p>
+        Our security shield has detected automated browser automation, headless drivers (e.g. Puppeteer/Selenium), or rapid robotic querying patterns.
+      </p>
+      <p class="rounded bg-slate-50 border border-slate-200 p-2.5 font-mono text-[11px] text-slate-800">
+        Bulk extraction, mass scraping, and data harvesting of PrivacyLaw.free content are strictly prohibited under our Terms of Use and international database protections.
+      </p>
+      <p class="text-slate-500">
+        If you are a legitimate human researcher or student, please disable browser automation extensions or headless environments and reload the page.
+      </p>
+    </div>
+
+    <div class="mt-5">
+      <button
+        type="button"
+        id="anti-scrape-verify-human-btn"
+        class="w-full rounded bg-red-900 px-4 py-2 text-xs font-bold text-white hover:bg-red-950 transition-colors"
+      >
+        I Am A Human Researcher (Verify & Unlock)
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    // Anti-Web-Scraper & Bot Detection Logic
+    function detectScraper() {
+      // 1. Check for automated webdriver flag (Puppeteer, Selenium, Playwright)
+      if (navigator.webdriver === true) {
+        return 'webdriver_active';
+      }
+
+      // 2. Check for automation globals
+      if (
+        window._phantom ||
+        window.__nightmare ||
+        window.callPhantom ||
+        window.domAutomation ||
+        document.__selenium_unwrapped ||
+        document.__webdriver_evaluate
+      ) {
+        return 'automation_globals';
+      }
+
+      // 3. Check for headless browser indicators
+      const isHeadless = /HeadlessChrome|PhantomJS|Electron/i.test(navigator.userAgent);
+      if (isHeadless) {
+        return 'headless_user_agent';
+      }
+
+      // 4. Rate-limiting tripwire: detect unnatural rapid page requests (e.g. >10 requests in 3s)
+      try {
+        const now = Date.now();
+        const historyKey = 'pl_scrape_req_history';
+        const raw = sessionStorage.getItem(historyKey);
+        let history = raw ? JSON.parse(raw) : [];
+        history = history.filter((ts) => now - ts < 3000);
+        history.push(now);
+        sessionStorage.setItem(historyKey, JSON.stringify(history));
+
+        if (history.length > 10) {
+          return 'rapid_rate_limit_exceeded';
+        }
+      } catch (e) {
+        // storage disabled or restricted
+      }
+
+      // 5. Check if honeypot was flagged in this session
+      try {
+        if (sessionStorage.getItem('pl_honeypot_triggered') === 'true') {
+          return 'honeypot_triggered';
+        }
+      } catch (e) {}
+
+      return false;
+    }
+
+    function triggerAntiScrapeDefense(reason) {
+      // Apply blur and content lock
+      const modal = document.getElementById('anti-scrape-shield-modal');
+      const main = document.querySelector('main');
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      if (main) {
+        main.style.filter = 'blur(10px)';
+        main.style.pointerEvents = 'none';
+        main.style.userSelect = 'none';
+      }
+
+      // Log security anomaly locally
+      console.warn('[Security Shield] Automated scraping blocked. Reason:', reason);
+    }
+
+    // Attach clipboard anti-scraping watermark
+    document.addEventListener('copy', function (e) {
+      const selection = window.getSelection();
+      if (!selection || selection.toString().length < 80) return;
+
+      const watermark = '\n\n[Source: PrivacyLaw.free — "Privacy law, made accessible to all for free, in one place." Unauthorized bulk harvesting strictly prohibited.]';
+      const textWithWatermark = selection.toString() + watermark;
+
+      if (e.clipboardData) {
+        e.clipboardData.setData('text/plain', textWithWatermark);
+        e.preventDefault();
+      }
+    });
+
+    // Run detection on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const scraperReason = detectScraper();
+      if (scraperReason) {
+        triggerAntiScrapeDefense(scraperReason);
+      }
+
+      // Unlock button for human verification
+      const verifyBtn = document.getElementById('anti-scrape-verify-human-btn');
+      if (verifyBtn) {
+        verifyBtn.addEventListener('click', function () {
+          try {
+            sessionStorage.removeItem('pl_scrape_req_history');
+            sessionStorage.removeItem('pl_honeypot_triggered');
+          } catch (e) {}
+
+          const modal = document.getElementById('anti-scrape-shield-modal');
+          const main = document.querySelector('main');
+          if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+          }
+          if (main) {
+            main.style.filter = 'none';
+            main.style.pointerEvents = 'auto';
+            main.style.userSelect = 'auto';
+          }
+        });
+      }
+
+      // Honeypot tripwire event
+      const honeyLink = document.querySelector('.bot-trap-link');
+      if (honeyLink) {
+        honeyLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          try {
+            sessionStorage.setItem('pl_honeypot_triggered', 'true');
+          } catch (err) {}
+          triggerAntiScrapeDefense('honeypot_link_clicked');
+        });
+      }
+    });
+  })();
+</script>

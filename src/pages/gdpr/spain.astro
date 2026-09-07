@@ -1,0 +1,98 @@
+---
+// src/pages/gdpr/spain.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+
+const allCases = await getCollection('cases');
+const spainCases = allCases.filter((c) => c.data.country === 'Spain');
+---
+
+<BaseLayout
+  title="Spain GDPR Enforcement Hub (AEPD) | Landmark Fines & Decisions"
+  description="Explore Spain's Data Protection Agency (AEPD) enforcement actions, telemarketing penalties, cookie consent rulings, and vendor compliance decisions."
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex items-center space-x-2 text-xs text-slate-500">
+      <a href="/" class="hover:text-red-900">Home</a>
+      <span>/</span>
+      <a href="/gdpr" class="hover:text-red-900">EU GDPR</a>
+      <span>/</span>
+      <span class="text-slate-900 font-medium">Spain (AEPD)</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3">
+        <span class="text-4xl">🇪🇸</span>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-900">
+            National Enforcement Hub
+          </span>
+          <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            Spain: AEPD Enforcement & Fines
+          </h1>
+        </div>
+      </div>
+      <p class="mt-4 text-base text-slate-600 leading-relaxed">
+        The <strong>Agencia Española de Protección de Datos (AEPD)</strong> is widely recognized as Europe's most active privacy regulator by sheer case volume. With over 2,000+ enforcement actions in our database, the AEPD is renowned for its zero-tolerance policy against aggressive telemarketing spam, failure to honor "Lista Robinson" opt-out registries, and vendor subcontracting negligence.
+      </p>
+    </div>
+
+    <!-- Ad Placement Top -->
+    <AdSlot slotId="spain-hub-top" format="horizontal" />
+
+    <!-- Core Characteristics of Spanish Enforcement -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="rounded border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="font-bold text-slate-900 text-base">High-Volume Sanctions</div>
+        <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+          While Ireland targets a few Big Tech giants with billion-euro fines, Spain issues hundreds of targeted fines against banks, telcos, and SMEs each year.
+        </p>
+      </div>
+
+      <div class="rounded border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="font-bold text-slate-900 text-base">The "Lista Robinson" Rule</div>
+        <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+          Spain strictly enforces compliance with its national do-not-call opt-out directory. Failing to check the registry before dialling leads to swift, itemized penalties.
+        </p>
+      </div>
+
+      <div class="rounded border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="font-bold text-slate-900 text-base">Strict Vendor Accountability</div>
+        <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+          Under Article 28, the AEPD repeatedly rules that companies cannot escape liability by shifting blame to outsourced marketing agencies or third-party call centers.
+        </p>
+      </div>
+    </div>
+
+    <!-- Cases List -->
+    <div class="mt-12">
+      <div class="border-b border-slate-200 pb-3">
+        <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+          Explained Decisions from Spain (AEPD) ({spainCases.length})
+        </h2>
+      </div>
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {spainCases.map((entry) => (
+          <CaseCard
+            title={entry.data.title}
+            slug={entry.slug}
+            dpa={entry.data.dpa}
+            country={entry.data.country}
+            fine={entry.data.fine_amount}
+            articles={entry.data.articles_cited}
+            tldr={entry.data.tldr}
+            jurisdiction={entry.data.jurisdiction}
+            category={entry.data.category}
+            isTop5={entry.data.is_top_5}
+            top5Rank={entry.data.top_5_rank}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+

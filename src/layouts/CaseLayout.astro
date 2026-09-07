@@ -1,0 +1,141 @@
+---
+// src/layouts/CaseLayout.astro
+import BaseLayout from './BaseLayout.astro';
+import FactBadge from '../components/FactBadge.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+interface Props {
+  title: string;
+  caseName: string;
+  popularName: string;
+  dpa: string;
+  country: string;
+  jurisdiction: string;
+  fineAmount: string;
+  decisionDate: string;
+  articlesCited: string[];
+  examDomain: string;
+  tldr: string;
+  category: string;
+  isTop5?: boolean;
+  top5Rank?: number;
+  sourceUrl?: string;
+}
+
+const {
+  title,
+  caseName,
+  popularName,
+  dpa,
+  country,
+  jurisdiction,
+  fineAmount,
+  decisionDate,
+  articlesCited,
+  examDomain,
+  tldr,
+  category,
+  isTop5,
+  top5Rank,
+  sourceUrl,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={`${title} | PrivacyLaw.free`}
+  description={tldr}
+  ogType="article"
+>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 bg-white">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex items-center space-x-2 text-xs text-slate-500">
+      <a href="/" class="hover:text-red-900">Home</a>
+      <span>/</span>
+      <a href="/cases" class="hover:text-red-900">Cases</a>
+      <span>/</span>
+      <span class="text-slate-900 font-medium truncate max-w-xs">{popularName}</span>
+    </nav>
+
+    <!-- Top 5 Rank Callout if applicable -->
+    {isTop5 && top5Rank && (
+      <div class="mb-4 inline-flex items-center gap-2 rounded bg-amber-100 border border-amber-300 px-3.5 py-1 text-xs font-bold text-amber-900">
+        <span class="flex h-2 w-2 rounded-full bg-amber-600"></span>
+        Landmark Enforcement • #{top5Rank} Largest GDPR Fine in History
+      </div>
+    )}
+
+    <!-- Main Headline -->
+    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl leading-tight">
+      {title}
+    </h1>
+
+    <!-- Subtitle / Meta -->
+    <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
+      <span>Official Record: <strong class="text-slate-800 font-semibold">{caseName}</strong></span>
+      <span>•</span>
+      <span>Decision Date: {decisionDate}</span>
+      <span>•</span>
+      <span class="rounded bg-slate-100 border border-slate-200 px-2 py-0.5 font-medium text-slate-700">{category}</span>
+    </div>
+
+    <!-- Verified Fact Badge -->
+    <div class="mt-6">
+      <FactBadge
+        dpa={dpa}
+        country={country}
+        fine={fineAmount}
+        articles={articlesCited}
+        jurisdiction={jurisdiction}
+      />
+    </div>
+
+    <!-- CIPP/E / AIGP Exam Domain Pill -->
+    <div class="mt-4 flex items-center justify-between rounded border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-red-900">Certification Alignment:</span>
+        <span class="text-slate-700">{examDomain}</span>
+      </div>
+      {sourceUrl && (
+        <a
+          href={sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1 font-semibold text-red-900 hover:underline"
+        >
+          Official Decision
+          <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      )}
+    </div>
+
+    <!-- Ad Placement Top -->
+    <AdSlot slotId="case-top-leaderboard" format="horizontal" />
+
+    <!-- Article Markdown Content -->
+    <div class="prose prose-slate mt-8 max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900 prose-a:text-red-900 hover:prose-a:underline prose-blockquote:border-red-900 prose-blockquote:bg-slate-50 prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded font-sans">
+      <slot />
+    </div>
+
+    <!-- Ad Placement Bottom -->
+    <AdSlot slotId="case-bottom-rectangle" format="horizontal" />
+
+    <!-- Navigation Footer for Cases -->
+    <div class="mt-12 flex items-center justify-between border-t border-slate-200 pt-6">
+      <a href="/cases" class="inline-flex items-center gap-1.5 text-sm font-semibold text-red-900 hover:underline">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Browse All Cases
+      </a>
+      <a href="/top-5" class="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-900 hover:underline">
+        Explore Top 5 Biggest Fines
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </article>
+</BaseLayout>
+

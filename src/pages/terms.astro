@@ -1,0 +1,105 @@
+---
+// src/pages/terms.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Terms of Use & Anti-Scraping Agreement | PrivacyLaw.free"
+  description="Terms of Use for PrivacyLaw.free: strictly educational purpose, limited non-commercial license, no legal advice, and strict prohibition on automated web scraping and data harvesting."
+>
+  <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-1.5 rounded border border-slate-300 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-700">
+        Legal Agreement
+      </span>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+        Terms of Use
+      </h1>
+      <p class="mt-3 text-sm text-slate-500">
+        Effective Date: September 2026 • Version 1.2
+      </p>
+    </div>
+
+    <!-- Quick Summary Box -->
+    <div class="mt-8 rounded-lg border border-slate-300 bg-slate-50 p-6 text-sm text-slate-800 leading-relaxed">
+      <strong>Plain-English Summary:</strong> PrivacyLaw.free is a 100% free, no-login, no-paywall educational publication created to make privacy law accessible to all. You are welcome to read, study, and reference our content for personal and educational use. However, nothing on this site is legal advice, you cannot use this site if you intend to commercially scrape or harvest our content with automated bots, and you agree to respect our single-creator ad-supported access model.
+    </div>
+
+    <div class="prose prose-slate mt-8 max-w-none text-sm leading-relaxed space-y-6">
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">1. Acceptance of Terms</h2>
+        <p class="text-slate-700">
+          By visiting, browsing, viewing, or interacting with <strong>PrivacyLaw.free</strong> ("the Website"), you ("User", "you") agree to be fully bound by these Terms of Use, our <a href="/disclaimer" class="underline text-red-900 font-semibold">Educational Disclaimer</a>, and our <a href="/privacy" class="underline text-red-900 font-semibold">Privacy Policy</a>. If you do not agree with any part of these terms, you must immediately discontinue using the Website.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">2. Strictly Educational Purpose & No Legal Advice</h2>
+        <p class="text-slate-700">
+          The materials, case summaries, regulatory penalty breakdowns, and statutory analyses published on PrivacyLaw.free are strictly for <strong>general informational, academic, and educational research purposes only</strong>.
+        </p>
+        <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-700">
+          <li><strong>No Attorney-Client Relationship:</strong> Browsing this Website or reading our articles does not create an attorney-client, advisory, or fiduciary relationship between you and PrivacyLaw.free or its creator.</li>
+          <li><strong>No Legal Opinion:</strong> None of the articles, guides, or statutory summaries constitute a formal legal opinion, compliance endorsement, or formal legal advice.</li>
+          <li><strong>Mandatory Counsel Requirement:</strong> You must not act or refrain from acting based on content found on this Website without consulting a qualified, licensed privacy attorney in your jurisdiction.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">3. Limited License & Intellectual Property</h2>
+        <p class="text-slate-700">
+          All original textual explanations, editorial synthesis, structure, and presentation published on PrivacyLaw.free are the proprietary intellectual property of the platform creator, protected under international copyright conventions and database protection laws.
+        </p>
+        <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-700">
+          <li><strong>Permitted Use:</strong> You are granted a limited, revocable, non-exclusive, non-transferable license to view and read articles for personal, educational, research, and professional development purposes (such as CIPP/E, CIPM, or AIGP study).</li>
+          <li><strong>Academic Quoting:</strong> Short excerpts may be cited or referenced in academic papers, blogs, and presentations provided clear, clickable attribution to PrivacyLaw.free is included.</li>
+          <li><strong>Prohibited Reproduction:</strong> Bulk copying, syndication, commercial republication, framing, or creating derivative mirror websites without express prior written consent is strictly prohibited.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">4. Strict Prohibition on Automated Scraping & Data Harvesting</h2>
+        <p class="text-slate-700">
+          To protect server integrity, user experience, and intellectual effort, automated extraction of PrivacyLaw.free is prohibited under civil and cyber statute protections:
+        </p>
+        <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-700">
+          <li><strong>No Robotic Crawlers:</strong> You may not use automated spiders, web scrapers, headless browser scripts (e.g. Selenium, Puppeteer, Playwright), Scrapy, curl/wget loops, or bulk extraction tools on this Website.</li>
+          <li><strong>No LLM / AI Training Harvesting:</strong> Commercial scraping for large language model (LLM) training, dataset creation, or artificial intelligence benchmarking is expressly forbidden.</li>
+          <li><strong>Technical Security Traps:</strong> This Website employs invisible honeypots, webdriver detection, and automated rate-limiting shields. Intentionally circumventing or probing these security tripwires constitutes unauthorized computer access.</li>
+          <li><strong>Permitted Search Indexing:</strong> Standard public web search engines (e.g. Google, Bing) may index pages strictly in accordance with our <code>robots.txt</code> file and crawl-delay specifications.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">5. Free Access & Advertising Disclosure</h2>
+        <p class="text-slate-700">
+          PrivacyLaw.free is operated as an independent, single-creator open educational resource. To keep all guides 100% free without charging reader subscriptions or creating paywalls, we display standard programmatic advertisements (via Google AdSense). Users agree not to engage in fraudulent click generation, automated ad manipulation, or malicious interference with legitimate sponsored placements.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">6. Disclaimer of Warranties & Limitation of Liability</h2>
+        <p class="text-slate-700">
+          While all case details, fine amounts, and statutory citations are deterministically verified against official regulatory decision records, legal precedents and interpretations evolve over time.
+        </p>
+        <p class="mt-2 text-slate-700">
+          THE WEBSITE AND ALL ITS CONTENT ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE MAXIMUM EXTENT PERMITTED BY LAW, PRIVACYLAW.FREE DISCLAIMS ALL LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO REGULATORY FINES, COMPLIANCE PENALTIES, LOST PROFITS, OR BUSINESS LOSSES ARISING FROM YOUR USE OF OR INABILITY TO USE THE WEBSITE.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">7. Indemnification</h2>
+        <p class="text-slate-700">
+          You agree to defend, indemnify, and hold harmless PrivacyLaw.free and its creator from and against any claims, liabilities, damages, judgments, losses, costs, or legal fees arising out of your violation of these Terms of Use, unlawful scraping, or unauthorized commercial exploitation.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-slate-900">8. Governing Law & Contact</h2>
+        <p class="text-slate-700">
+          These Terms of Use shall be governed by and construed in accordance with applicable general law. For licensing requests, academic inquiries, or legal notifications, you may contact: <code>legal@privacylawexplainer.org</code>.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

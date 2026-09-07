@@ -1,0 +1,139 @@
+---
+// src/pages/top-5.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+const allCases = await getCollection('cases');
+const top5Cases = allCases
+  .filter((c) => c.data.is_top_5 && c.data.top_5_rank)
+  .sort((a, b) => (a.data.top_5_rank || 0) - (b.data.top_5_rank || 0));
+---
+
+<BaseLayout
+  title="The Top 5 Biggest GDPR Fines in History | Full Plain-English Breakdowns"
+  description="Deep-dive into the 5 largest privacy penalties ever issued under the EU GDPR: Meta (€1.2B), Amazon (€746M), Instagram (€405M), TikTok (€345M), and WhatsApp (€225M)."
+>
+  <!-- Hero Section -->
+  <div class="border-b border-slate-200 bg-white px-4 py-14 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl text-center">
+      <span class="inline-flex items-center gap-2 rounded border border-slate-300 bg-slate-50 px-3.5 py-1 text-xs font-bold text-slate-700">
+        Record Book
+      </span>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+        The Top 5 Biggest GDPR Fines in History
+      </h1>
+      <p class="mx-auto mt-4 max-w-2xl text-base text-slate-600 sm:text-lg leading-relaxed">
+        Over <strong>€2.97 Billion</strong> in combined penalties. Here is what happened, why each penalty was issued, and what privacy lessons every tech company must learn.
+      </p>
+
+      <!-- Quick Stat Counter -->
+      <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 max-w-2xl mx-auto">
+        <div class="rounded border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="text-2xl sm:text-3xl font-bold text-red-900">€2.92B+</div>
+          <div class="text-xs text-slate-500 font-medium mt-1">Combined Top 5 Total</div>
+        </div>
+        <div class="rounded border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="text-2xl sm:text-3xl font-bold text-slate-900">#1 €1.2B</div>
+          <div class="text-xs text-slate-500 font-medium mt-1">Single Highest Fine (Meta)</div>
+        </div>
+        <div class="col-span-2 sm:col-span-1 rounded border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="text-2xl sm:text-3xl font-bold text-emerald-800">100%</div>
+          <div class="text-xs text-slate-500 font-medium mt-1">Factually Cross-Verified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Ad Placement Top -->
+    <AdSlot slotId="top5-header-slot" format="horizontal" />
+
+    <!-- Top 5 Stacked Deep Dives -->
+    <div class="space-y-10">
+      {top5Cases.map((c) => (
+        <section class="relative rounded border border-slate-200 bg-white p-6 sm:p-8 shadow-sm hover:border-red-900 transition-all">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+            <!-- Left: Rank & Title -->
+            <div class="space-y-3 flex-1">
+              <div class="flex items-center gap-3">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-amber-600 text-white font-black text-base shadow-sm">
+                  #{c.data.top_5_rank}
+                </span>
+                <div>
+                  <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    {c.data.dpa} • {c.data.country} ({c.data.year})
+                  </span>
+                  <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+                    <a href={`/cases/${c.slug}`} class="hover:text-red-900">
+                      {c.data.popular_name}
+                    </a>
+                  </h2>
+                </div>
+              </div>
+
+              <!-- Official Record Reference -->
+              <p class="text-xs font-mono text-slate-600">
+                Official Case: {c.data.case_name}
+              </p>
+
+              <!-- The Plain English Breakdown -->
+              <p class="text-sm text-slate-700 leading-relaxed pt-2">
+                {c.data.tldr}
+              </p>
+
+              <!-- Articles Cited Pills -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-2">
+                <span class="text-xs font-semibold text-slate-500">Articles Breached:</span>
+                {c.data.articles_cited.map((art) => (
+                  <span class="rounded bg-slate-100 border border-slate-200 px-2 py-0.5 font-mono text-xs font-medium text-slate-800">
+                    {art}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <!-- Right: Fine Box & Action -->
+            <div class="shrink-0 flex flex-col justify-between items-start md:items-end rounded border border-slate-200 bg-slate-50 p-5 md:w-56 text-left md:text-right">
+              <div>
+                <span class="text-[11px] uppercase font-bold tracking-wider text-slate-500 block">Sanction Issued</span>
+                <span class="text-2xl font-black text-red-700 block mt-0.5">
+                  {c.data.fine_amount}
+                </span>
+                <span class="text-[11px] text-slate-600 mt-1 block">
+                  Domain: {c.data.category}
+                </span>
+              </div>
+
+              <a
+                href={`/cases/${c.slug}`}
+                class="mt-6 inline-flex w-full items-center justify-center rounded bg-red-900 px-4 py-2 text-xs font-bold text-white hover:bg-red-950 transition-colors"
+              >
+                Read Full Breakdown →
+              </a>
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Ad Placement Mid -->
+    <AdSlot slotId="top5-middle-slot" format="horizontal" />
+
+    <!-- Why Big Tech Dominates The Top 5 -->
+    <div class="mt-14 rounded border border-slate-200 bg-slate-50 p-8">
+      <h3 class="text-xl font-bold tracking-tight text-slate-900">
+        Why Do Big Tech Companies Dominate the Top 5?
+      </h3>
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-700 leading-relaxed">
+        <p>
+          Under GDPR Article 83, fines are calculated not just on the severity of the violation, but also as a percentage of the company's worldwide annual turnover (up to 4%). Because giants like Meta and Amazon generate tens of billions in annual revenue, penalties naturally reach astronomical sums.
+        </p>
+        <p>
+          Furthermore, Big Tech business models inherently rely on <em>network effects</em> and <em>mass behavioral ad monetization</em>. When default settings or consent practices are flawed, millions of citizens are impacted simultaneously, triggering the maximum tier of regulatory enforcement.
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+

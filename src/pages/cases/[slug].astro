@@ -1,0 +1,36 @@
+---
+// src/pages/cases/[slug].astro
+import { getCollection } from 'astro:content';
+import CaseLayout from '../../layouts/CaseLayout.astro';
+
+export async function getStaticPaths() {
+  const cases = await getCollection('cases');
+  return cases.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<CaseLayout
+  title={entry.data.title}
+  caseName={entry.data.case_name}
+  popularName={entry.data.popular_name}
+  dpa={entry.data.dpa}
+  country={entry.data.country}
+  jurisdiction={entry.data.jurisdiction}
+  fineAmount={entry.data.fine_amount}
+  decisionDate={entry.data.decision_date}
+  articlesCited={entry.data.articles_cited}
+  examDomain={entry.data.exam_domain}
+  tldr={entry.data.tldr}
+  category={entry.data.category}
+  isTop5={entry.data.is_top_5}
+  top5Rank={entry.data.top_5_rank}
+  sourceUrl={entry.data.source_url}
+>
+  <Content />
+</CaseLayout>
