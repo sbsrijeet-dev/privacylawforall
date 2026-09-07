@@ -10,15 +10,19 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
   ogType?: string;
   image?: string;
+  jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
 const {
   title = 'PrivacyLawForAll.free — Privacy law, made accessible to all for free, in one place',
   description = 'Free, plain-English explainer articles on landmark privacy law cases, fines, and regulations across EU GDPR, India DPDPA, and the EU AI Act.',
+  keywords = 'privacy law, privacy law explained, cipp/e, iapp, gdpr fines, edpb, ico, dpc, cnil, aepd, garante, data protection officer, india dpdpa, eu ai act, landmark privacy cases',
   ogType = 'website',
   image = '/og-image.png',
+  jsonLd,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -32,10 +36,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Security & Anti-Scraping Directives -->
-    <meta name="robots" content="index, follow, max-snippet:150, max-image-preview:none, noarchive" />
+    <!-- Search Engine & Snippet Optimization -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -59,6 +64,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       'name': 'PrivacyLawForAll.free',
+      'alternateName': ['Privacy Law For All', 'PrivacyLawForAll', 'Privacy Law Explained'],
       'url': 'https://privacylawforall.sbsrijeet.workers.dev',
       'description': description,
       'potentialAction': {
@@ -67,6 +73,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         'query-input': 'required name=search_term_string'
       }
     })} />
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
 
     <!-- Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

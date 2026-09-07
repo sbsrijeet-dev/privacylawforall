@@ -39,12 +39,76 @@ const {
   top5Rank,
   sourceUrl,
 } = Astro.props;
+
+const canonicalPage = new URL(Astro.url.pathname, Astro.site).toString();
+
+const caseKeywords = `${popularName}, ${caseName}, ${dpa}, ${jurisdiction}, ${articlesCited?.join(', ') || ''}, ${examDomain}, cipp/e, iapp, gdpr fines, privacy law explained, data protection`;
+
+const caseJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    'headline': title,
+    'description': tldr,
+    'url': canonicalPage,
+    'datePublished': decisionDate,
+    'dateModified': '2026-09-07',
+    'inLanguage': 'en',
+    'author': {
+      '@type': 'Organization',
+      'name': 'PrivacyLawForAll Editorial',
+      'url': 'https://privacylawforall.sbsrijeet.workers.dev',
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'PrivacyLawForAll.free',
+      'url': 'https://privacylawforall.sbsrijeet.workers.dev',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://privacylawforall.sbsrijeet.workers.dev/og-image.png',
+      },
+    },
+    'about': [
+      { '@type': 'Thing', 'name': jurisdiction },
+      { '@type': 'Thing', 'name': dpa },
+      { '@type': 'Thing', 'name': `Fine: ${fineAmount}` },
+      ...(articlesCited || []).map((art: string) => ({ '@type': 'Thing', 'name': art })),
+    ],
+    'keywords': caseKeywords,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://privacylawforall.sbsrijeet.workers.dev/',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Cases',
+        'item': 'https://privacylawforall.sbsrijeet.workers.dev/cases',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 3,
+        'name': popularName,
+        'item': canonicalPage,
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
   title={`${title} | PrivacyLawForAll.free`}
   description={tldr}
+  keywords={caseKeywords}
   ogType="article"
+  jsonLd={caseJsonLd}
 >
   <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 bg-white">
     <!-- Breadcrumbs -->

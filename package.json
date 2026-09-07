@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node -e \"const fs=require('fs'); if(fs.existsSync('dist/sitemap-index.xml')) fs.copyFileSync('dist/sitemap-index.xml', 'dist/sitemap.xml');\"",
     "preview": "astro preview",
     "verify": "python tools/verifier/verify_article.py"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@astrojs/tailwind": "^5.1.5",
     "@tailwindcss/typography": "^0.5.16",
     "astro": "^5.4.2",

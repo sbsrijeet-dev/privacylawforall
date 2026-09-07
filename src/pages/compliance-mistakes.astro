@@ -149,11 +149,28 @@ const MISTAKES: Mistake[] = [
     engineeringTakeaway: 'All consent checkmarks and toggle switches must start in an unchecked/OFF state. Never infer consent from page scrolling or continuing to use a service.',
   },
 ];
+
+const mistakesKeywords = 'compliance mistakes, gdpr violations, cookie consent fines, dark patterns, cipp/e study, privacy law explained, data protection fines, dpc, cnil, aepd, ico';
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': MISTAKES.map((m) => ({
+    '@type': 'Question',
+    'name': `What makes "${m.title}" an illegal GDPR compliance mistake?`,
+    'acceptedAnswer': {
+      '@type': 'Answer',
+      'text': `${m.whyRegulatorsFine} Practical engineering takeaway: ${m.engineeringTakeaway} Illustrated by the ${m.caseName} (€${m.fine} penalty by ${m.dpa} under ${m.legalArticle}).`,
+    },
+  })),
+};
 ---
 
 <BaseLayout
   title="10 Most Common Compliance Mistakes & Landmark Fines | PrivacyLawForAll.free"
-  description="Learn from multi-million-euro GDPR enforcement disasters: the 10 most expensive compliance traps, real-world case precedents, and concrete engineering takeaways."
+  description="Examine the top 10 engineering and legal compliance blunders that resulted in over €2.5 Billion in regulatory fines under EU GDPR and UK DPA."
+  keywords={mistakesKeywords}
+  jsonLd={faqJsonLd}
 >
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
     <!-- Breadcrumbs -->
