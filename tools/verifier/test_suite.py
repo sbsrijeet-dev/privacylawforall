@@ -176,8 +176,8 @@ def audit_static_distribution():
         else:
             audit_errors.append(f"{rel_path}: Missing mandatory top disclaimer banner.")
 
-        # 2. Check AdBlock Modal
-        if "adblock-modal-overlay" in content:
+        # 2. Check AdBlock / Creator Support Banner
+        if "adblock-modal-overlay" in content or "creator-support-card" in content:
             pages_with_adblock += 1
 
         # 3. Check Cookie Banner
