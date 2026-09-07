@@ -3,7 +3,7 @@
 Comprehensive Web Scraper & Cyber Attack Defense Verification Suite
 -------------------------------------------------------------------
 Automated security testing tool verifying the multi-layer defensive posture
-of PrivacyLaw.free against automated scrapers, headless bot drivers, and
+of PrivacyLawForAll.free against automated scrapers, headless bot drivers, and
 data harvesting attacks.
 
 Audits:

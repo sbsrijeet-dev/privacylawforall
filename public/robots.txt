@@ -1,4 +1,4 @@
-# robots.txt for PrivacyLaw.free
+# robots.txt for PrivacyLawForAll.free
 # "Privacy law, made accessible to all for free, in one place."
 # Automated mass scraping, extraction, and harvesting are strictly prohibited.
 
@@ -51,4 +51,4 @@ Disallow: /.git/
 Disallow: /.env
 Crawl-delay: 5
 
-Sitemap: https://privacylawexplainer.org/sitemap.xml
+Sitemap: https://privacylawforall.sbsrijeet.workers.dev/sitemap.xml

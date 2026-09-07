@@ -15,7 +15,7 @@ interface Props {
 }
 
 const {
-  title = 'PrivacyLaw.free — Privacy law, made accessible to all for free, in one place',
+  title = 'PrivacyLawForAll.free — Privacy law, made accessible to all for free, in one place',
   description = 'Free, plain-English explainer articles on landmark privacy law cases, fines, and regulations across EU GDPR, India DPDPA, and the EU AI Act.',
   ogType = 'website',
   image = '/og-image.png',
@@ -58,12 +58,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      'name': 'PrivacyLaw.free',
-      'url': 'https://privacylawexplainer.org',
+      'name': 'PrivacyLawForAll.free',
+      'url': 'https://privacylawforall.sbsrijeet.workers.dev',
       'description': description,
       'potentialAction': {
         '@type': 'SearchAction',
-        'target': 'https://privacylawexplainer.org/cases?q={search_term_string}',
+        'target': 'https://privacylawforall.sbsrijeet.workers.dev/cases?q={search_term_string}',
         'query-input': 'required name=search_term_string'
       }
     })} />

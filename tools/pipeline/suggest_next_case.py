@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-3-Day Case Expansion Pipeline Tool for PrivacyLaw.free.
+3-Day Case Expansion Pipeline Tool for PrivacyLawForAll.free.
 Scans existing published cases, queries the local ChromaDB database (63,000+ records),
 and suggests high-value new privacy law enforcement decisions ready to be explained.
 
@@ -175,14 +175,14 @@ The authority established non-compliance with **Article {case['article']}**:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="PrivacyLaw.free 3-Day Case Expansion Helper")
+    parser = argparse.ArgumentParser(description="PrivacyLawForAll.free 3-Day Case Expansion Helper")
     parser.add_argument("--count", type=int, default=5, help="Number of suggestions (default: 5)")
     parser.add_argument("--country", type=str, default=None, help="Filter by country (e.g. Germany, Spain, Italy)")
     parser.add_argument("--generate", type=int, default=None, help="Index of suggestion to generate template for (1-based)")
     args = parser.parse_args()
 
     print("=" * 72)
-    print("  PrivacyLaw.free - 3-Day Case Expansion Suggester")
+    print("  PrivacyLawForAll.free - 3-Day Case Expansion Suggester")
     print("  Scans 63,000+ enforcement records in database against published cases")
     print("=" * 72)
 

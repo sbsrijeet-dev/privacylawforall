@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://privacylawexplainer.org',
+  site: 'https://privacylawforall.sbsrijeet.workers.dev',
   integrations: [tailwind({
     applyBaseStyles: false,
   })],
