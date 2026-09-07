@@ -139,8 +139,19 @@ const pathname = new URL(Astro.request.url).pathname;
       </a>
     </nav>
 
-    <!-- Right: Mobile Menu Button -->
-    <div class="flex items-center gap-2">
+    <!-- Right: Buy Me a Coffee & Mobile Menu Button -->
+    <div class="flex items-center gap-2.5">
+      <a
+        href="https://buymeacoffee.com/sbsrijeet"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 rounded-full bg-amber-400 px-3.5 py-1.5 text-xs font-bold text-slate-900 shadow-sm transition-all hover:bg-amber-500 hover:scale-105"
+        title="Support this free educational project"
+      >
+        <span class="text-sm">☕</span>
+        <span class="hidden sm:inline">Buy Me a Coffee</span>
+      </a>
+
       <button
         id="mobile-menu-button"
         type="button"
@@ -157,6 +168,14 @@ const pathname = new URL(Astro.request.url).pathname;
   <!-- Mobile Navigation drawer -->
   <div id="mobile-menu" class="hidden border-b border-slate-200 bg-white px-4 py-3 md:hidden">
     <div class="flex flex-col space-y-2">
+      <a
+        href="https://buymeacoffee.com/sbsrijeet"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center justify-center gap-2 rounded-lg bg-amber-400 py-2 text-xs font-bold text-slate-900 shadow-sm"
+      >
+        ☕ Buy Me a Coffee (Support the Project)
+      </a>
       <a href="/top-5" class="rounded px-3 py-2 text-sm font-semibold text-amber-900 bg-amber-100 border border-amber-300">Top 5 Fines</a>
       <a href="/cases" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">All Cases</a>
       <a href="/categories" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Thematic Categories</a>
