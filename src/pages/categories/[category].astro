@@ -68,6 +68,29 @@ const otherCategories = CATEGORIES.filter((c) => c.slug !== categoryMeta.slug);
       </div>
     </div>
 
+    <!-- Featured Cornerstone Guide for Cross-Border Transfers -->
+    {categoryMeta.slug === 'cross-border-transfers' && (
+      <div class="mt-8 rounded-xl border border-red-200 bg-red-50/60 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <span class="inline-flex items-center gap-1.5 rounded bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-900 uppercase tracking-wider">
+            Cornerstone Reference Guide
+          </span>
+          <h3 class="mt-2 text-lg sm:text-xl font-bold text-slate-900">
+            Schrems I, Schrems II & Why Standard Contractual Clauses Failed
+          </h3>
+          <p class="mt-1 text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
+            Understand the complete legal battle: Safe Harbor, Privacy Shield, FISA 702, the 4 modern SCC modules, and how companies must navigate international transfers today.
+          </p>
+        </div>
+        <a
+          href="/schrems-and-sccs"
+          class="shrink-0 rounded-lg bg-red-900 px-4 py-2.5 text-xs font-bold text-white hover:bg-red-950 transition-colors shadow-sm"
+        >
+          Read Master Guide →
+        </a>
+      </div>
+    )}
+
     <!-- Top Ad Placement -->
     <AdSlot slotId={`cat-${categoryMeta.slug}-top`} format="horizontal" />
 

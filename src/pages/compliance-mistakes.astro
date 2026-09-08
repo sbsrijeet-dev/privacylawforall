@@ -274,13 +274,21 @@ const faqJsonLd = {
                   {m.engineeringTakeaway}
                 </p>
               </div>
-              <div class="mt-4 pt-3 border-t border-emerald-200">
+              <div class="mt-4 pt-3 border-t border-emerald-200 flex flex-wrap items-center justify-between gap-2">
                 <a
                   href={`/cases/${m.caseSlug}`}
                   class="text-[11px] font-bold text-red-900 hover:underline inline-flex items-center gap-1"
                 >
                   Read full explainer for this case →
                 </a>
+                {m.rank === 9 && (
+                  <a
+                    href="/schrems-and-sccs"
+                    class="text-[11px] font-bold text-slate-800 hover:text-red-900 underline inline-flex items-center gap-1"
+                  >
+                    Deep Dive: Schrems I, II & SCCs Guide →
+                  </a>
+                )}
               </div>
             </div>
           </div>

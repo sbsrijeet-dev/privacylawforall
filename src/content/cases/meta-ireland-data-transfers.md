@@ -81,3 +81,7 @@ If you are studying for your CIPP/E certification or managing cross-border data 
 1. **Contracts Alone Are Never Enough:** A signed SCC is invalid if national security or domestic surveillance laws in the destination country contradict the contract terms.
 2. **Transfer Impact Assessments (TIAs) Are Mandatory:** Before sending personal data outside the EEA, companies must conduct a rigorous assessment of local laws in the destination country.
 3. **Encryption Without Key Isolation Fails:** Transferring encrypted data only protects you if the receiving party *cannot* decrypt it and is not legally compelled to hand over the decryption keys.
+
+---
+
+> **Complete Transatlantic Transfer Deep Dive:** Want to understand the full legal battle that produced this decision? Read our comprehensive guide on [Schrems I, Schrems II & Why Standard Contractual Clauses Failed](/schrems-and-sccs)—covering the fall of Safe Harbor and Privacy Shield, the 4 modern SCC modules, and the EDPB 6-step compliance roadmap.
