@@ -41,6 +41,17 @@ const pathname = new URL(Astro.request.url).pathname;
       </a>
 
       <a
+        href="/schrems-and-sccs"
+        class={`rounded px-3 py-1.5 text-sm font-semibold transition-colors ${
+          pathname.startsWith('/schrems-and-sccs')
+            ? 'bg-red-50 text-red-900 font-semibold border border-red-200'
+            : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+        }`}
+      >
+        Schrems & SCCs
+      </a>
+
+      <a
         href="/cases"
         class={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
           pathname.startsWith('/cases')
@@ -180,6 +191,7 @@ const pathname = new URL(Astro.request.url).pathname;
         ☕ Buy Me a Coffee (Support the Project)
       </a>
       <a href="/top-5" class="rounded px-3 py-2 text-sm font-semibold text-amber-900 bg-amber-100 border border-amber-300">Top 5 Fines</a>
+      <a href="/schrems-and-sccs" class="rounded px-3 py-2 text-sm font-semibold text-red-900 bg-red-100 border border-red-300">Schrems & SCCs</a>
       <a href="/cases" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">All Cases</a>
       <a href="/categories" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Thematic Categories</a>
       <a href="/compliance-mistakes" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">10 Compliance Mistakes</a>
