@@ -1,30 +1,31 @@
 # PROJECT_MEMORY.md — Master Architecture & Session Memory
 
-> **System State as of:** 2026-09-09  
+> **System State as of:** 2026-09-11  
 > **Repository:** `C:\Users\USER\.gemini\antigravity\scratch\privacy-law-explainer`  
 > **Production URL:** `https://privacylawforall.sbsrijeet.workers.dev/`  
-> **Git Commit:** `fedfbab` on `main` (clean working tree)
+> **Git Commit:** `d1631db` on `main` (clean working tree)
 
 ---
 
 ## 1. Current State of the Platform
 
-### A. Published Content & Routes (52 Static Production Pages)
-* **Flagship Master Guides:**
+### A. Published Content & Routes (53 Static Production Routes / 55 HTML Documents)
+* **Flagship Master Guides & Studios:**
+  * `/dpia`: **NEW** — Dedicated Article 35 DPIA Studio (two-tier screening matrix, 8-part Article 35(7) practitioner blueprint, Article 36 escalation guide, and 5 counterfactual landmark dossiers).
   * `/schrems-and-sccs`: The definitive Schrems I, II & SCCs Master Guide (CJEU rulings, FISA 702, 4 transfer modules, supplementary measures).
   * `/compliance-mistakes`: 10 Fatal GDPR Compliance Mistakes engineered with practical DPO remediation checklists.
   * `/top-5`: Top 5 Largest Fines Tracked (€2.92B+ in penalties across Meta, Amazon, Instagram, TikTok, WhatsApp).
   * `/dpdpa`: Comprehensive India Digital Personal Data Protection Act (DPDPA 2023) hub.
   * `/eu-ai-act`: EU Artificial Intelligence Act 4-tier risk categorization matrix.
-  * `/gdpr/articles`: Directory of key GDPR Articles with plain-English breakdowns.
+  * `/gdpr/articles`: Directory of key GDPR Articles with plain-English breakdowns and dedicated Article 35 DPIA Studio banner.
 * **National GDPR Hubs (6 Countries):**
-  * `/gdpr/germany`: **NEW** — Germany Regional Hub (BfDI, 16 state DPAs, DSK, BDSG § 26 employee privacy, deletion concepts).
+  * `/gdpr/germany`: Germany Regional Hub (BfDI, 16 state DPAs, DSK, BDSG § 26 employee privacy, deletion concepts).
   * `/gdpr/france`: CNIL Hub (ePrivacy, cookie refusal asymmetry of effort, adtech).
   * `/gdpr/ireland`: DPC Hub (Lead authority for Meta, Google, TikTok, Big Tech).
   * `/gdpr/spain`: AEPD Hub (High-volume spam calls, banking consent, subcontracting).
   * `/gdpr/italy`: Garante Hub (Generative AI scraping bans, telemarketing databases).
   * `/gdpr/uk`: ICO Hub (UK GDPR, Age Appropriate Design Code, cyber breach penalties).
-* **24 Landmark Case Explainers:** All 24 cases pass deterministic database verification (19 original + 5 new German cases: H&M, Deutsche Wohnen, Notebooksbilliger, 1&1 Telecom, Knuddels).
+* **24 Landmark Case Explainers:** All 24 cases pass deterministic database verification (19 original + 5 German cases: H&M, Deutsche Wohnen, Notebooksbilliger, 1&1 Telecom, Knuddels).
 * **8 Thematic Category Hubs:** AI & Biometrics, AdTech & Cookies, Telemarketing & Spam, Cybersecurity & Breaches, Children's Privacy, Cross-Border Transfers, Consent & Banking, Transparency & Notice.
 
 ### B. Infrastructure & Tooling
