@@ -1,0 +1,106 @@
+---
+// src/components/dpia/DpiaMethodologyGuide.astro
+import { DPIA_METHODOLOGY_STEPS } from '../../data/dpia/methodologySteps';
+---
+
+<div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+  <div class="border-b border-slate-200 pb-5">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-900 font-bold text-sm">
+        2
+      </span>
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-serif">
+        The 8-Part Article 35(7) DPIA Methodology Blueprint
+      </h2>
+    </div>
+    <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+      A legally compliant DPIA is not a generic narrative essay—it is an 8-part architectural and statutory dossier mandated by GDPR Article 35(7) and DPA enforcement precedent. Below is the comprehensive step-by-step methodology required to satisfy European supervisory standards.
+    </p>
+  </div>
+
+  <div class="mt-6 space-y-4">
+    {DPIA_METHODOLOGY_STEPS.map((step) => (
+      <details class="group rounded-lg border border-slate-200 bg-white p-4 transition-all [&_summary::-webkit-details-marker]:hidden open:border-red-600 open:shadow-xs">
+        <summary class="flex items-center justify-between cursor-pointer list-none">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded-md bg-slate-100 text-slate-800 font-mono text-xs font-bold group-open:bg-red-900 group-open:text-white transition-colors">
+              P{step.partNumber}
+            </span>
+            <div>
+              <span class="font-bold text-slate-900 text-sm sm:text-base block">
+                Part {step.partNumber}: {step.title}
+              </span>
+              <span class="text-xs text-slate-500 font-medium">
+                {step.subtitle} • <span class="font-mono text-[10px] text-red-900 bg-red-50 px-1 py-0.5 rounded border border-red-200">{step.statutoryAnchor}</span>
+              </span>
+            </div>
+          </div>
+          <span class="ml-2 shrink-0 text-slate-400 group-open:rotate-180 transition-transform text-xs">
+            ▼
+          </span>
+        </summary>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-700 space-y-4">
+          <!-- Objective -->
+          <div class="rounded bg-slate-50 p-3 border border-slate-200/80">
+            <span class="font-bold text-slate-900 block mb-1">Core Legal Objective:</span>
+            <p class="text-slate-600 text-xs leading-relaxed">{step.coreObjective}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Mandatory Deliverables -->
+            <div class="rounded border border-slate-200 p-3.5 bg-white">
+              <span class="font-bold text-slate-900 text-xs uppercase tracking-wider block mb-2 text-emerald-950 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                Mandatory Deliverables
+              </span>
+              <ul class="space-y-1.5 text-xs text-slate-600 list-disc pl-4">
+                {step.mandatoryDeliverables.map((item) => (
+                  <li class="leading-relaxed">{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Key Engineering Questions -->
+            <div class="rounded border border-slate-200 p-3.5 bg-white">
+              <span class="font-bold text-slate-900 text-xs uppercase tracking-wider block mb-2 text-blue-950 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                Key Questions to Ask Engineering
+              </span>
+              <ul class="space-y-1.5 text-xs text-slate-600 list-disc pl-4">
+                {step.keyQuestions.map((q) => (
+                  <li class="leading-relaxed">{q}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Pitfalls & Regulatory Check -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+            <div class="rounded border border-red-200 bg-red-50/40 p-3.5">
+              <span class="font-bold text-red-950 text-xs uppercase tracking-wider block mb-2 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                Fatal Compliance Pitfalls
+              </span>
+              <ul class="space-y-1.5 text-xs text-red-900/90 list-disc pl-4">
+                {step.fatalPitfalls.map((p) => (
+                  <li class="leading-relaxed">{p}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="rounded border border-amber-200 bg-amber-50/40 p-3.5 flex flex-col justify-between">
+              <div>
+                <span class="font-bold text-amber-950 text-xs uppercase tracking-wider block mb-1.5 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-amber-600"></span>
+                  Regulatory Precedent Benchmark
+                </span>
+                <p class="text-xs text-amber-900 leading-relaxed">{step.regulatoryCheck}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+    ))}
+  </div>
+</div>

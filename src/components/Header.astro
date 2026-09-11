@@ -52,6 +52,17 @@ const pathname = new URL(Astro.request.url).pathname;
       </a>
 
       <a
+        href="/dpia"
+        class={`rounded px-3 py-1.5 text-sm font-semibold transition-colors ${
+          pathname.startsWith('/dpia')
+            ? 'bg-red-50 text-red-900 font-semibold border border-red-200'
+            : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+        }`}
+      >
+        DPIA Studio
+      </a>
+
+      <a
         href="/cases"
         class={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
           pathname.startsWith('/cases')
@@ -109,6 +120,9 @@ const pathname = new URL(Astro.request.url).pathname;
             </a>
             <a href="/schrems-and-sccs" class="block rounded px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-slate-100">
               Schrems I, II & SCCs Master Guide
+            </a>
+            <a href="/dpia" class="block rounded px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-slate-100">
+              DPIA Studio & Article 35 Blueprint
             </a>
             <div class="my-1 border-t border-slate-200"></div>
             <a href="/gdpr/spain" class="flex items-center justify-between rounded px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-100">
@@ -195,6 +209,7 @@ const pathname = new URL(Astro.request.url).pathname;
       </a>
       <a href="/top-5" class="rounded px-3 py-2 text-sm font-semibold text-amber-900 bg-amber-100 border border-amber-300">Top 5 Fines</a>
       <a href="/schrems-and-sccs" class="rounded px-3 py-2 text-sm font-semibold text-red-900 bg-red-100 border border-red-300">Schrems & SCCs</a>
+      <a href="/dpia" class="rounded px-3 py-2 text-sm font-semibold text-red-900 bg-red-100 border border-red-300">DPIA Studio</a>
       <a href="/cases" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">All Cases</a>
       <a href="/categories" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Thematic Categories</a>
       <a href="/compliance-mistakes" class="rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">10 Compliance Mistakes</a>
@@ -202,6 +217,7 @@ const pathname = new URL(Astro.request.url).pathname;
       <div class="pl-4 space-y-1 text-xs text-slate-600">
         <a href="/gdpr/articles" class="block py-1 hover:text-red-900 font-medium">Statutory Articles Directory</a>
         <a href="/schrems-and-sccs" class="block py-1 hover:text-red-900 font-medium">Schrems I, II & SCCs Master Guide</a>
+        <a href="/dpia" class="block py-1 hover:text-red-900 font-medium">DPIA Studio & Article 35</a>
         <a href="/gdpr/spain" class="block py-1 hover:text-red-900">Spain (AEPD)</a>
         <a href="/gdpr/france" class="block py-1 hover:text-red-900">France (CNIL)</a>
         <a href="/gdpr/ireland" class="block py-1 hover:text-red-900">Ireland (DPC)</a>

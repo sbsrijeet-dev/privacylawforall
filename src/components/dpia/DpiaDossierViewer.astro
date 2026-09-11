@@ -1,0 +1,268 @@
+---
+// src/components/dpia/DpiaDossierViewer.astro
+import { FULL_MOCK_DPIAS } from '../../data/dpia/fullMockDpias';
+---
+
+<div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+  <div class="border-b border-slate-200 pb-5">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-900 font-bold text-sm">
+        3
+      </span>
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-red-900">
+          Full Operational Demonstrations
+        </span>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-serif">
+          Five Full-Length Mock DPIAs (Grounded in Landmark Regulatory Enforcement Decisions)
+        </h2>
+      </div>
+    </div>
+    <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+      This is what a compliant Data Protection Impact Assessment looks like in practice. Rather than merely describing principles, explore the <strong>actual full-length mock DPIA reports</strong> modeled directly on landmark European regulatory enforcement actions. Each dossier reconstructs how the processing operation should have been evaluated under Article 35 GDPR prior to deployment, including statutory screening triggers, Article 35(7) mandatory content, and supervisory authority precedent.
+    </p>
+  </div>
+
+  <!-- Case Selector Tabs -->
+  <div class="mt-6 flex flex-wrap gap-2 border-b border-slate-200 pb-4">
+    {FULL_MOCK_DPIAS.map((dossier, idx) => (
+      <button
+        type="button"
+        data-case-btn={dossier.id}
+        class={`case-selector-btn rounded-lg px-3.5 py-2 text-xs font-semibold transition-colors flex items-center gap-2 border ${
+          idx === 0
+            ? 'bg-red-900 text-white border-red-900 shadow-xs'
+            : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:text-slate-900'
+        }`}
+      >
+        <span>{dossier.company}</span>
+        <span class="rounded px-1.5 py-0.5 text-[10px] font-bold bg-white/20 text-current border border-current/20">
+          {dossier.fineAmount}
+        </span>
+      </button>
+    ))}
+  </div>
+
+  <!-- Case Containers -->
+  <div class="mt-6">
+    {FULL_MOCK_DPIAS.map((dossier, idx) => (
+      <div
+        id={`case-panel-${dossier.id}`}
+        class={`case-panel space-y-6 ${idx === 0 ? 'block' : 'hidden'}`}
+      >
+        <!-- Case Top Meta Bar -->
+        <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-200 pb-3">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-red-900">
+                {dossier.jurisdiction} • {dossier.dpa}
+              </span>
+              <h3 class="text-lg font-bold text-slate-900 font-serif mt-0.5">
+                {dossier.title}
+              </h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1 rounded bg-emerald-100 border border-emerald-300 px-2.5 py-1 text-xs font-semibold text-emerald-900" title="Grounded in European Data Protection Board and national supervisory decisions">
+                <span>✓</span> Regulatory Precedent Grounded
+              </span>
+              <span class="inline-flex items-center rounded bg-red-100 border border-red-200 px-2.5 py-1 text-xs font-bold text-red-900">
+                Fine: {dossier.fineAmount}
+              </span>
+            </div>
+          </div>
+
+          <!-- Document Section / Sub-Tab Switcher -->
+          <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium">
+            <button
+              type="button"
+              data-view-btn={`${dossier.id}-full`}
+              data-case-id={dossier.id}
+              class={`view-toggle-btn rounded px-3 py-1.5 border transition-colors bg-white text-red-900 border-red-300 font-bold shadow-xs`}
+            >
+              📄 Full 8-Part Mock DPIA
+            </button>
+            <button
+              type="button"
+              data-view-btn={`${dossier.id}-screen`}
+              data-case-id={dossier.id}
+              class={`view-toggle-btn rounded px-3 py-1.5 border transition-colors bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200`}
+            >
+              ⚖️ Statutory Screening (EDPB WP248)
+            </button>
+            <button
+              type="button"
+              data-view-btn={`${dossier.id}-self`}
+              data-case-id={dossier.id}
+              class={`view-toggle-btn rounded px-3 py-1.5 border transition-colors bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200`}
+            >
+              🔍 Article 35(7) Mandatory Elements
+            </button>
+            <button
+              type="button"
+              data-view-btn={`${dossier.id}-citation`}
+              data-case-id={dossier.id}
+              class={`view-toggle-btn rounded px-3 py-1.5 border transition-colors bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200`}
+            >
+              📚 Statutory & Precedent Citations
+            </button>
+          </div>
+        </div>
+
+        <!-- View Pane 1: Full 8-Part Mock DPIA -->
+        <div
+          id={`view-pane-${dossier.id}-full`}
+          class={`sub-view-pane-${dossier.id} rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs`}
+        >
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
+            <div class="text-xs text-slate-500 font-mono">
+              STATUS: Full-Form Mock DPIA • Article 35 GDPR Pedagogical Benchmark • Grounded in EU Law
+            </div>
+            <button
+              type="button"
+              data-copy-markdown={dossier.id}
+              class="inline-flex items-center gap-1.5 rounded border border-slate-300 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+            >
+              <span>📋</span> Copy Raw Markdown
+            </button>
+          </div>
+
+          <div class="prose prose-slate max-w-none text-slate-800" set:html={dossier.dpia_html} />
+
+          <textarea id={`raw-md-${dossier.id}`} class="hidden" readonly>{dossier.dpia_text}</textarea>
+        </div>
+
+        <!-- View Pane 2: Screening Assessment -->
+        <div
+          id={`view-pane-${dossier.id}-screen`}
+          class={`sub-view-pane-${dossier.id} hidden rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs`}
+        >
+          <div class="border-b border-slate-200 pb-3 mb-6">
+            <h4 class="text-sm font-bold uppercase tracking-wider text-slate-900">
+              Statutory Triggers & EDPB WP248 Criteria Screening
+            </h4>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Ex-ante high-risk legal screening establishing the mandatory obligation to conduct a DPIA under Article 35(1) & (3) GDPR.
+            </p>
+          </div>
+          <div class="prose prose-slate max-w-none text-slate-800" set:html={dossier.screen_html} />
+        </div>
+
+        <!-- View Pane 3: Article 35(7) Completeness Audit -->
+        <div
+          id={`view-pane-${dossier.id}-self`}
+          class={`sub-view-pane-${dossier.id} hidden rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs`}
+        >
+          <div class="border-b border-slate-200 pb-3 mb-6">
+            <h4 class="text-sm font-bold uppercase tracking-wider text-slate-900">
+              Article 35(7) Statutory Completeness & Governance Audit
+            </h4>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Compliance verification auditing mandatory statutory components: processing descriptions, proportionality tests, risk matrices, and documented DPO consultation.
+            </p>
+          </div>
+          <div class="prose prose-slate max-w-none text-slate-800" set:html={dossier.self_check_html} />
+        </div>
+
+        <!-- View Pane 4: Legal Citation-Grounding Audit -->
+        <div
+          id={`view-pane-${dossier.id}-citation`}
+          class={`sub-view-pane-${dossier.id} hidden rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs`}
+        >
+          <div class="border-b border-slate-200 pb-3 mb-6">
+            <h4 class="text-sm font-bold uppercase tracking-wider text-slate-900">
+              Statutory Authority & Precedent Case Law Citations
+            </h4>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Legal authorities, CJEU rulings, and supervisory decisions substantiating the assessment's risk thresholds and technical safeguards.
+            </p>
+          </div>
+          <div class="prose prose-slate max-w-none text-slate-800" set:html={dossier.citation_check_html} />
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  // Case Selector Switcher
+  const caseButtons = document.querySelectorAll('[data-case-btn]');
+  const casePanels = document.querySelectorAll('.case-panel');
+
+  caseButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-case-btn');
+
+      // Update button styling
+      caseButtons.forEach((b) => {
+        b.classList.remove('bg-red-900', 'text-white', 'border-red-900', 'shadow-xs');
+        b.classList.add('bg-slate-50', 'text-slate-700', 'border-slate-200');
+      });
+      btn.classList.remove('bg-slate-50', 'text-slate-700', 'border-slate-200');
+      btn.classList.add('bg-red-900', 'text-white', 'border-red-900', 'shadow-xs');
+
+      // Update panels
+      casePanels.forEach((p) => {
+        p.classList.add('hidden');
+        p.classList.remove('block');
+      });
+      const targetPanel = document.getElementById(`case-panel-${targetId}`);
+      if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+        targetPanel.classList.add('block');
+      }
+    });
+  });
+
+  // Sub-View Switcher (Full DPIA vs Screen vs Self-Check vs Citation)
+  const viewToggleButtons = document.querySelectorAll('[data-view-btn]');
+
+  viewToggleButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const viewKey = btn.getAttribute('data-view-btn');
+      const caseId = btn.getAttribute('data-case-id');
+
+      // Update button styles within this case
+      const siblings = document.querySelectorAll(`[data-case-id="${caseId}"]`);
+      siblings.forEach((s) => {
+        s.classList.remove('bg-white', 'text-red-900', 'border-red-300', 'font-bold', 'shadow-xs');
+        s.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-200');
+      });
+      btn.classList.remove('bg-slate-100', 'text-slate-700', 'border-slate-200');
+      btn.classList.add('bg-white', 'text-red-900', 'border-red-300', 'font-bold', 'shadow-xs');
+
+      // Hide all sub-views for this case
+      const panes = document.querySelectorAll(`.sub-view-pane-${caseId}`);
+      panes.forEach((p) => {
+        p.classList.add('hidden');
+        p.classList.remove('block');
+      });
+
+      // Show target sub-view
+      const targetPane = document.getElementById(`view-pane-${viewKey}`);
+      if (targetPane) {
+        targetPane.classList.remove('hidden');
+        targetPane.classList.add('block');
+      }
+    });
+  });
+
+  // Copy Markdown Handler
+  const copyButtons = document.querySelectorAll('[data-copy-markdown]');
+  copyButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const caseId = btn.getAttribute('data-copy-markdown');
+      const textarea = document.getElementById(`raw-md-${caseId}`);
+      if (textarea) {
+        navigator.clipboard.writeText(textarea.value).then(() => {
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<span>✓</span> Copied Markdown!';
+          btn.classList.add('bg-emerald-50', 'text-emerald-900', 'border-emerald-300');
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.classList.remove('bg-emerald-50', 'text-emerald-900', 'border-emerald-300');
+          }, 2000);
+        });
+      }
+    });
+  });
+</script>

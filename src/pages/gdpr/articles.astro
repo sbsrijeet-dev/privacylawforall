@@ -208,6 +208,18 @@ const ARTICLES: StatutoryArticle[] = [
     regulatorFocus: 'Routinely enforced when companies spend weeks investigating internally before alerting their national data protection authority.',
   },
   {
+    number: '35',
+    title: 'Data Protection Impact Assessment (DPIA)',
+    chapter: 'Chapter IV: Controller and Processor',
+    summary: 'Mandates a formal risk assessment prior to high-risk processing operations (automated profiling, large-scale sensitive data, public surveillance, AI). Failure to conduct a DPIA carries strict statutory liability under Article 83(4)(a).',
+    keyRequirements: [
+      'Strictly mandatory for Article 35(3) statutory triggers and EDPB WP248 9-criteria high-risk operations.',
+      'Must contain Article 35(7) mandatory components: systematic description, necessity & proportionality test, risk assessment, and technical/organizational mitigations.',
+      'If residual high risk cannot be mitigated, controller must invoke Article 36 Prior Consultation before processing begins.',
+    ],
+    regulatorFocus: 'Core investigative trigger in profiling, biometric scanning, employee monitoring, and AI deployment cases. Explore our DPIA Studio for complete statutory templates.',
+  },
+  {
     number: '44',
     title: 'General Principle for International Transfers',
     chapter: 'Chapter V: Third Country Transfers',
@@ -369,6 +381,24 @@ const ARTICLES: StatutoryArticle[] = [
                   class="shrink-0 rounded bg-red-900 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-950 transition-colors shadow-sm"
                 >
                   Read Schrems & SCCs Guide →
+                </a>
+              </div>
+            )}
+
+            <!-- Featured Workbench for DPIA Article 35 -->
+            {art.number === '35' && (
+              <div class="mt-4 rounded-lg border border-slate-300 bg-slate-50 p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                <div>
+                  <span class="font-bold text-slate-950 block">Dedicated DPIA Studio & Article 35 Master Blueprint:</span>
+                  <p class="text-slate-700 text-[11px] mt-0.5">
+                    Explore the complete statutory Article 35(3) screening matrix, the EDPB 9-criteria risk doctrine, the 8-part methodology blueprint, and 5 counterfactual landmark dossiers.
+                  </p>
+                </div>
+                <a
+                  href="/dpia"
+                  class="shrink-0 rounded bg-red-900 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-950 transition-colors shadow-sm"
+                >
+                  Launch DPIA Studio →
                 </a>
               </div>
             )}

@@ -164,8 +164,8 @@ def audit_static_distribution():
         rel_path = hf.relative_to(DIST_DIR).as_posix()
         content = hf.read_text(encoding="utf-8")
 
-        # Skip honeypot trap page and Google search console verification file from standard public layout checks
-        if "security/trap" in rel_path or rel_path.startswith("google"):
+        # Skip honeypot trap page, Google verification, and automated redirect stubs from standard public layout checks
+        if "security/trap" in rel_path or rel_path.startswith("google") or 'http-equiv="refresh"' in content.lower():
             continue
 
         # 1. Check Banner

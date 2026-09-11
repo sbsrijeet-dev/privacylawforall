@@ -5,6 +5,9 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://privacylawforall.sbsrijeet.workers.dev',
+  redirects: {
+    '/mock-dpia': '/dpia',
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,

@@ -1,0 +1,297 @@
+---
+// src/pages/dpia.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
+import DpiaScreeningMatrix from '../components/dpia/DpiaScreeningMatrix.astro';
+import DpiaMethodologyGuide from '../components/dpia/DpiaMethodologyGuide.astro';
+import DpiaDossierViewer from '../components/dpia/DpiaDossierViewer.astro';
+
+const title = "DPIA Studio & GDPR Article 35 Master Blueprint | PrivacyLawForAll.free";
+const description = "The definitive, plain-English reference guide to Data Protection Impact Assessments (DPIAs) under Article 35 GDPR: statutory triggers, EDPB WP248 9-criteria risk matrix, the 8-part methodology blueprint, and 5 counterfactual landmark enforcement dossiers.";
+const keywords = "DPIA, Data Protection Impact Assessment, Article 35 GDPR, Article 36 GDPR, EDPB WP248, high risk processing, DPIA methodology, DPO guide, prior consultation, counterfactual DPIA, Meta DPIA, Google dark patterns DPIA, HM surveillance DPIA, Deutsche Wohnen archive DPIA";
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a Data Protection Impact Assessment (DPIA) under the GDPR?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Governed by Article 35 GDPR, a DPIA is a formal risk assessment process designed to identify, assess, and mitigate risks to the rights and freedoms of natural persons arising from high-risk processing operations. It evaluates not merely data security, but fundamental human rights including freedom of expression, non-discrimination, and privacy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is a DPIA legally mandatory under Article 35(3) GDPR?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A DPIA is strictly mandatory in three statutory scenarios under Article 35(3): (1) Systematic and extensive automated profiling producing legal or similarly significant effects; (2) Large-scale processing of special category data (Article 9) or criminal conviction data (Article 10); and (3) Systematic, large-scale monitoring of publicly accessible areas (e.g., CCTV or biometric surveillance)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the EDPB Nine-Criteria Risk Threshold (WP248 rev.01)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under EDPB Guidelines 248/17, European supervisory authorities evaluate high risk across nine criteria: Evaluation/Scoring, Automated Decision-Making with legal effects, Systematic Monitoring, Sensitive/Special Category Data, Large-Scale Processing, Matching/Combining Datasets, Vulnerable Subjects, Innovative Technology/AI, and Denial of Rights/Services. As a general rule, triggering two or more criteria mandates a formal DPIA."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the four mandatory components of an Article 35(7) DPIA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Article 35(7) establishes that every DPIA must contain at least: (1) A systematic description of processing operations and purposes; (2) An assessment of necessity and proportionality against stated objectives; (3) An assessment of the risks to rights and freedoms of data subjects; and (4) Measures envisaged to address the risks, including technical and organizational safeguards."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Article 36 Prior Consultation and when must it be invoked?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under Article 36(1) GDPR, if a DPIA indicates that processing would result in high residual risk in the absence of measures taken by the controller to mitigate that risk, the controller must formally consult the competent supervisory authority prior to initiating processing. The DPA has up to 8 weeks (extendable by 6 weeks) to provide formal written advice or exercise corrective powers, including imposing an absolute processing ban."
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  jsonLd={faqJsonLd}
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 bg-white">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex items-center space-x-2 text-xs text-slate-500">
+      <a href="/" class="hover:text-red-900 transition-colors">Home</a>
+      <span>/</span>
+      <a href="/gdpr" class="hover:text-red-900 transition-colors">EU GDPR</a>
+      <span>/</span>
+      <span class="text-slate-900 font-medium">DPIA Studio & Article 35 Blueprint</span>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="max-w-4xl">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded border border-red-300 bg-red-50 px-3 py-1 text-xs font-bold text-red-900">
+          Article 35 & 36 GDPR Master Blueprint
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded border border-slate-300 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
+          Statutory Engineering & DPO Workbench
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
+          EDPB Guidelines 248/17
+        </span>
+      </div>
+
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl font-serif leading-tight">
+        Data Protection Impact Assessment (DPIA) Studio
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+        The definitive, authoritative reference manual for conducting and evaluating Data Protection Impact Assessments under <strong>Article 35 GDPR</strong>. Synthesizing the black-letter statutory mandates of the EU legislator, the Article 29 Working Party (EDPB) <strong>WP248 rev.01</strong> doctrine, and supervisory enforcement decisions, this workbench bridges legal jurisprudence and practical system architecture.
+      </p>
+
+      <!-- Mandatory Educational & Mock DPIA Disclaimer Banner -->
+      <div class="mt-6 rounded-lg border-2 border-amber-400 bg-amber-50/90 p-5 sm:p-6 text-amber-950 shadow-xs">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">⚖️</span>
+          <h2 class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-amber-950">
+            Mandatory Educational & Counterfactual Model Disclaimer
+          </h2>
+        </div>
+        <p class="mt-2.5 text-xs sm:text-sm text-amber-950 leading-relaxed">
+          These dossiers, templates, and blueprints are <strong>educational counterfactual models and mock assessments</strong> prepared in adherence to European data protection standards. They do <strong>NOT</strong> constitute officiated, certified, or regulatory-approved DPIAs, nor do they represent actual internal records filed by the named entities or approved by supervisory authorities. They are published strictly as pedagogical tools to illustrate statutory principles, risk identification, and architectural remediations. Users and organizations must <strong>NOT</strong> copy, replicate, or adopt these templates, risk scorings, or specific wordings as valid operational DPIAs for real-world production systems without independent legal and Data Protection Officer (DPO) review.
+        </p>
+        <div class="mt-3 pt-2.5 border-t border-amber-200 text-[11px] text-amber-900 flex items-center gap-1.5 font-medium">
+          <span>📌</span>
+          <span>For official statutory guidelines, refer to <a href="https://edpb.europa.eu" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-950 font-bold">EDPB Guidelines 248/17 (WP248 rev.01)</a> and your competent national supervisory authority.</span>
+        </div>
+      </div>
+
+      <!-- Quick Section Anchor Links -->
+      <div class="mt-6 flex flex-wrap gap-2 text-xs font-medium">
+        <a
+          href="#screening-matrix"
+          class="rounded border border-slate-300 bg-slate-50 px-3 py-1.5 text-slate-800 hover:border-red-900 hover:text-red-900 transition-colors"
+        >
+          1. Statutory Screening Matrix →
+        </a>
+        <a
+          href="#methodology-guide"
+          class="rounded border border-slate-300 bg-slate-50 px-3 py-1.5 text-slate-800 hover:border-red-900 hover:text-red-900 transition-colors"
+        >
+          2. The 8-Part Methodology →
+        </a>
+        <a
+          href="#counterfactual-dossiers"
+          class="rounded border border-slate-300 bg-slate-50 px-3 py-1.5 text-slate-800 hover:border-red-900 hover:text-red-900 transition-colors"
+        >
+          3. Landmark Enforcement Dossiers →
+        </a>
+        <a
+          href="#prior-consultation"
+          class="rounded border border-slate-300 bg-slate-50 px-3 py-1.5 text-slate-800 hover:border-red-900 hover:text-red-900 transition-colors"
+        >
+          4. Article 36 Prior Consultation →
+        </a>
+      </div>
+    </div>
+
+    <!-- Top Ad Placement -->
+    <AdSlot slotId="dpia-top-slot" format="horizontal" />
+
+    <div class="mt-10 space-y-12">
+      <!-- Section 1: Screening Matrix -->
+      <section id="screening-matrix">
+        <DpiaScreeningMatrix />
+      </section>
+
+      <!-- Mid Ad Placement -->
+      <AdSlot slotId="dpia-mid-slot" format="horizontal" />
+
+      <!-- Section 2: 8-Part Methodology Blueprint -->
+      <section id="methodology-guide">
+        <DpiaMethodologyGuide />
+      </section>
+
+      <!-- Section 3: Counterfactual Landmark Dossiers -->
+      <section id="counterfactual-dossiers">
+        <DpiaDossierViewer />
+      </section>
+
+      <!-- Section 4: Article 36 Prior Consultation & Enforcement -->
+      <section id="prior-consultation" class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+        <div class="border-b border-slate-200 pb-5">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-sm">
+              4
+            </span>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-serif">
+              Article 36 Prior Consultation: The Unmitigated Risk Escalation Gateway
+            </h2>
+          </div>
+          <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+            A DPIA is not merely an internal risk registry; it is an escalation mechanism. Under <strong>Article 36(1) GDPR</strong>, if an assessment indicates that the proposed processing operation would still result in a <em>high residual risk</em> despite all planned mitigating controls, the controller is legally prohibited from processing data until it formally consults the supervisory authority.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-700"></span>
+              The Mandatory Trigger
+            </h3>
+            <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+              Controllers cannot proceed with processing if residual risks remain at "High" or "Severe" severity. Proceeding without consulting the supervisory authority when residual high risk exists constitutes a direct, strict liability violation of Article 36(1).
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-600"></span>
+              The 8-Week Statutory Clock
+            </h3>
+            <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+              Under Article 36(2), the supervisory authority has <strong>up to 8 weeks</strong> to provide written advice to the controller. This period may be extended by an additional 6 weeks for complex operations. During this statutory standstill, all processing must remain frozen.
+            </p>
+          </div>
+
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-slate-800"></span>
+              Corrective Sanctions
+            </h3>
+            <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+              The supervisory authority may deploy its Article 58(2) powers: issuing formal warnings, ordering modifications, or imposing a <strong>temporary or definitive processing ban</strong>. Failure to comply triggers Article 83(4)(a) fines up to €10,000,000 or 2% of annual turnover.
+            </p>
+          </div>
+        </div>
+
+        <!-- Statutory Checklist Table -->
+        <div class="mt-8 overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-300 bg-slate-50 text-slate-800 font-semibold">
+                <th class="py-2.5 px-3 w-44">Article 36(3) Mandate</th>
+                <th class="py-2.5 px-3 w-60">Required Evidentiary Submission</th>
+                <th class="py-2.5 px-3">Regulatory Scrutiny Standard</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-3 font-mono text-red-900 font-bold">Art. 36(3)(a)</td>
+                <td class="py-3 px-3 font-semibold text-slate-900">Allocation of Controller / Processor Responsibilities</td>
+                <td class="py-3 px-3 text-slate-600 leading-relaxed">Formal Article 28 data processing agreements or Article 26 joint controller arrangements defining exact liability and operational boundaries.</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-3 font-mono text-red-900 font-bold">Art. 36(3)(b)</td>
+                <td class="py-3 px-3 font-semibold text-slate-900">Purposes and Means of the Intended Processing</td>
+                <td class="py-3 px-3 text-slate-600 leading-relaxed">Comprehensive technical architecture specifications, data flow diagrams, schema definitions, and vendor integrations.</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-3 font-mono text-red-900 font-bold">Art. 36(3)(c)</td>
+                <td class="py-3 px-3 font-semibold text-slate-900">Measures and Safeguards to Protect Rights & Freedoms</td>
+                <td class="py-3 px-3 text-slate-600 leading-relaxed">Cryptographic controls, differential privacy mechanisms, role-based access limits, pseudonymization policies, and third-party audit reports.</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-3 font-mono text-red-900 font-bold">Art. 36(3)(d)</td>
+                <td class="py-3 px-3 font-semibold text-slate-900">Contact Details of the Data Protection Officer (DPO)</td>
+                <td class="py-3 px-3 text-slate-600 leading-relaxed">Designated Article 37 DPO credentials and their independent Article 35(2) written opinion on the DPIA conclusions.</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3 px-3 font-mono text-red-900 font-bold">Art. 36(3)(e)</td>
+                <td class="py-3 px-3 font-semibold text-slate-900">The Complete Unabridged Article 35 DPIA Report</td>
+                <td class="py-3 px-3 text-slate-600 leading-relaxed">Full 8-part assessment document, threat models, residual risk matrix, and minutes of stakeholder consultations.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Bottom Reference Navigation Bar -->
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-4">
+          Explore Related Precedents & Statutory Reference Hubs
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <a
+            href="/cases/meta-ireland-data-transfers"
+            class="rounded-lg border border-slate-200 bg-white p-4 hover:border-red-900 transition-colors shadow-sm"
+          >
+            <span class="block font-bold text-slate-900">Meta €1.2B Transfer Breakdown</span>
+            <span class="text-slate-500 text-[11px] mt-1 block">How cross-border surveillance invalidated standard safeguards.</span>
+          </a>
+          <a
+            href="/cases/hm-germany"
+            class="rounded-lg border border-slate-200 bg-white p-4 hover:border-red-900 transition-colors shadow-sm"
+          >
+            <span class="block font-bold text-slate-900">H&M €35.3M Employee Surveillance</span>
+            <span class="text-slate-500 text-[11px] mt-1 block">Germany's landmark penalty for recording intimate personal lives.</span>
+          </a>
+          <a
+            href="/cases/deutsche-wohnen"
+            class="rounded-lg border border-slate-200 bg-white p-4 hover:border-red-900 transition-colors shadow-sm"
+          >
+            <span class="block font-bold text-slate-900">Deutsche Wohnen €14.5M Retention</span>
+            <span class="text-slate-500 text-[11px] mt-1 block">Why failure to implement an automated deletion archive was fatal.</span>
+          </a>
+          <a
+            href="/gdpr/germany"
+            class="rounded-lg border border-slate-200 bg-white p-4 hover:border-red-900 transition-colors shadow-sm"
+          >
+            <span class="block font-bold text-slate-900">Germany GDPR Enforcement Hub</span>
+            <span class="text-slate-500 text-[11px] mt-1 block">BfDI, 16 State Regulators, and the DSK statutory doctrine.</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Ad Placement -->
+    <AdSlot slotId="dpia-bottom-slot" format="horizontal" />
+  </div>
+</BaseLayout>

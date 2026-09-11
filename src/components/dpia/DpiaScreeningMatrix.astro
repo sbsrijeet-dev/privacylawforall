@@ -1,0 +1,140 @@
+---
+// src/components/dpia/DpiaScreeningMatrix.astro
+import { ARTICLE_35_3_TRIGGERS, EDPB_NINE_CRITERIA } from '../../data/dpia/screeningCriteria';
+---
+
+<div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+  <div class="border-b border-slate-200 pb-5">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-900 font-bold text-sm">
+        1
+      </span>
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-serif">
+        Article 35 Statutory Screening & High-Risk Criteria Matrix
+      </h2>
+    </div>
+    <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+      A Data Protection Impact Assessment is not required for all data processing. Under <strong>Article 35(1) GDPR</strong>, a DPIA is mandatory only when an operation is <em>"likely to result in a high risk to the rights and freedoms of natural persons"</em>. European data protection jurisprudence establishes a two-tiered threshold test to identify this high-risk threshold.
+    </p>
+  </div>
+
+  <!-- The Two-Tiered Threshold Doctrine -->
+  <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="rounded-lg border border-red-200 bg-red-50/40 p-5">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-700"></span>
+        <h3 class="font-bold text-red-950 text-sm uppercase tracking-wider">Tier 1: Statutory Mandatory Triggers</h3>
+      </div>
+      <p class="mt-2 text-xs text-red-900/90 leading-relaxed">
+        <strong>Article 35(3) GDPR</strong> identifies three specific categories of processing where the EU legislator has pre-determined that high risk is legally presumed. If an operation falls into any one of these three categories, a DPIA is <strong>strictly mandatory by law</strong>. No balancing test or discretionary exemption exists.
+      </p>
+    </div>
+
+    <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+        <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider">Tier 2: The EDPB Nine-Criteria Doctrine</h3>
+      </div>
+      <p class="mt-2 text-xs text-slate-700 leading-relaxed">
+        Under <strong>EDPB Guidelines 248/17 (WP248 rev.01)</strong>, supervisory authorities established 9 criteria to assess "likely high risk". As a general rule, meeting <strong>two or more criteria</strong> mandates a formal DPIA. Triggering a single criterion requires documented negative screening in the controller's accountability files.
+      </p>
+    </div>
+  </div>
+
+  <!-- Table 1: Statutory Article 35(3) Black-Letter Triggers -->
+  <div class="mt-8">
+    <div class="border-b border-slate-200 pb-2">
+      <h3 class="text-base font-bold text-slate-900 font-serif">
+        A. Statutory Directives: Article 35(3) Mandatory Processing
+      </h3>
+      <p class="text-xs text-slate-500 mt-0.5">
+        Any single trigger below establishes an automatic legal requirement for an Article 35 assessment.
+      </p>
+    </div>
+
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead>
+          <tr class="border-b border-slate-300 bg-slate-50 text-slate-800 font-semibold">
+            <th class="py-2.5 px-3 w-36">Statutory Basis</th>
+            <th class="py-2.5 px-3 w-64">Processing Category</th>
+            <th class="py-2.5 px-3">Legal Scope & Definitive Examples</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          {ARTICLE_35_3_TRIGGERS.map((trigger) => (
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="py-3.5 px-3 font-mono text-[11px] font-bold text-red-900 whitespace-nowrap align-top">
+                {trigger.article}
+              </td>
+              <td class="py-3.5 px-3 font-semibold text-slate-900 align-top">
+                {trigger.title}
+              </td>
+              <td class="py-3.5 px-3 text-slate-600 leading-relaxed align-top">
+                <p>{trigger.description}</p>
+                <div class="mt-2 text-[11px] text-slate-500">
+                  <span class="font-semibold text-slate-700">Real-World Examples:</span> {trigger.examples.join(' • ')}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Table 2: EDPB Guidelines 248/17 Nine-Criteria Matrix -->
+  <div class="mt-10">
+    <div class="border-b border-slate-200 pb-2">
+      <h3 class="text-base font-bold text-slate-900 font-serif">
+        B. The EDPB Nine-Criteria Risk Matrix (WP248 rev.01)
+      </h3>
+      <p class="text-xs text-slate-500 mt-0.5">
+        European DPAs presume high risk if processing satisfies <strong>two or more</strong> of the following criteria.
+      </p>
+    </div>
+
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead>
+          <tr class="border-b border-slate-300 bg-slate-50 text-slate-800 font-semibold">
+            <th class="py-2.5 px-3 w-16">#</th>
+            <th class="py-2.5 px-3 w-48">Risk Criterion</th>
+            <th class="py-2.5 px-3">Regulatory Scope & Context</th>
+            <th class="py-2.5 px-3 w-64">Industry Example</th>
+            <th class="py-2.5 px-3 w-48">Fundamental Risk Factor</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          {EDPB_NINE_CRITERIA.map((crit) => (
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="py-3 px-3 font-mono font-bold text-slate-400 align-top">
+                {crit.number.toString().padStart(2, '0')}
+              </td>
+              <td class="py-3 px-3 font-bold text-slate-900 align-top">
+                {crit.name}
+              </td>
+              <td class="py-3 px-3 text-slate-600 leading-relaxed align-top">
+                {crit.description}
+              </td>
+              <td class="py-3 px-3 text-slate-600 leading-relaxed align-top bg-slate-50/40">
+                {crit.example}
+              </td>
+              <td class="py-3 px-3 text-red-900/90 leading-relaxed align-top font-medium">
+                {crit.riskFactor}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Negative Screening Accountability Note -->
+  <div class="mt-8 rounded-lg border border-amber-300 bg-amber-50/60 p-5 text-xs text-amber-950">
+    <span class="font-bold text-sm block mb-1">The DPO Negative Screening Requirement (Article 35(1) Audit Trail)</span>
+    <p class="leading-relaxed">
+      If a controller decides <em>not</em> to carry out a DPIA for an innovative or data-intensive system because only 1 EDPB criterion was triggered, European supervisory authorities (such as France's CNIL and Germany's DSK) require that a <strong>Negative Screening Memo</strong> be formally drafted and signed off by the Data Protection Officer (DPO). The memo must record the reasons why the controller considered that the processing operation would not result in a high risk, and must be retained in the organization's Article 30 ROPA compliance archive for regulatory inspection.
+    </p>
+  </div>
+</div>
