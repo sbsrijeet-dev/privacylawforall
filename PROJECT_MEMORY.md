@@ -76,10 +76,14 @@
 
 ---
 
-## 3. Immediate Next Steps (For Next Session)
+## 3. Immediate Next Steps & Strategic Policy
 
-1. **Build the Mock DPIA Studio (`/mock-dpia`):**
-   * Implement the interactive Article 35 screening engine and risk assessment checklist.
-   * Author the 5 counterfactual landmark DPIA dossiers (Meta, Google, H&M, Deutsche Wohnen, Criteo).
-   * Add prominent navigation link in `Header.astro` and route redirect `/dpia` -> `/mock-dpia`.
-   * Run verification suite and deploy to production.
+1. **Launch US & California Privacy Frameworks (Move from 3 to 4 Global Frameworks):**
+   * Build California Regional Hub (`/california`): CCPA/CPRA consumer rights, GPC opt-out signals, CPPA enforcement precedents (Sephora, DoorDash), and statutory Privacy Risk Assessment (PRA) rules under CPRA § 1798.185(a)(15).
+   * Build US Federal & FTC Enforcement Hub (`/us-ftc`): FTC Act Section 5 unfair/deceptive practices, health data breaches (GoodRx, BetterHelp), and COPPA standards.
+   * Upgrade navigation and homepage framework grid to highlight 4 core global pillars: EU GDPR, India DPDPA, EU AI Act, and US / California.
+
+2. **Transition to Sustainable Steady-State Cadence (1 Case Every 3 Days):**
+   * Following the US/CAL launch, pause all major jurisdictional expansions.
+   * Default to a steady, high-quality cadence of **one newly verified landmark case study every 3 days**.
+   * Wait until the platform achieves public adoption and organic audience growth before adding any further regional jurisdictions.

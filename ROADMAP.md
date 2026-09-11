@@ -4,44 +4,45 @@
 
 ---
 
-## 1. Immediate Next Milestone: The DPIA Studio (`/mock-dpia` / `/dpia`)
-**Status:** In Progress (Execution scheduled next session)  
-**Goal:** Launch a complete interactive Data Protection Impact Assessment (DPIA) laboratory under GDPR Article 35.
-
-### Key Components:
-- **Interactive DPIA Assessment Wizard:**
-  - Article 35(3) mandatory screening (systematic profiling, special category data on large scale, public systematic monitoring).
-  - EDPB Guidelines 248/17 9-criteria risk threshold engine.
-  - Step-by-step risk mitigation and technical safeguards planner (encryption, pseudonymization, data minimization, retention caps).
-  - DPO recommendation and residual risk sign-off workflow.
-- **Pre-Built Counterfactual DPIA Dossiers:**
-  - Pre-engineered, publication-grade DPIA dossier breakdowns for landmark fined systems:
-    1. *Meta Cross-Border Data Transfers* (FISA 702 risk, SCC supplementary measures).
-    2. *Google France Cookie Tracking* (Asymmetry of effort, refusal dark patterns).
-    3. *H&M Nuremberg Employee Surveillance* (Special category health/religious data, § 26 BDSG).
-    4. *Deutsche Wohnen Rental Archives* (Automated archiving, deletion concept *Löschkonzept*).
-    5. *Criteo Behavioral AdTech* (Identity resolution, vendor consent passthrough).
-- **Navigation & Aliasing:**
-  - First-class link in `Header.astro` ("DPIA Studio").
-  - URL alias redirect in `astro.config.mjs`: `/dpia` -> `/mock-dpia`.
+## 1. Milestone Completed: The DPIA Studio (`/dpia`)
+**Status:** **COMPLETED & DEPLOYED LIVE** (2026-09-11)  
+**Accomplishments:**
+- Flagship Article 35 GDPR Studio live at `/dpia`.
+- Two-tier statutory screening matrix (Article 35(3) mandatory triggers + EDPB WP248 rev.01 9-criteria risk doctrine).
+- 8-part Article 35(7) methodology practitioner blueprint and Article 36 escalation guide.
+- 5 reverse-engineered counterfactual DPIA dossiers (Meta €1.2B, Google €150M, H&M €35.3M, Deutsche Wohnen €14.5M, Criteo €40M).
+- Full ecosystem cross-linking across Header, Footer, Homepage showcase banner, Article 5, and Article 35.
+- Complete site-wide audit with zero backend leaks, zero typos, and 100% verified legal citations.
 
 ---
 
-## 2. Near-Term Feature Backlog
+## 2. Immediate Next Milestone: US & California Privacy (Expanding from 3 to 4 Global Frameworks)
+**Status:** **PLANNED (Next Major Feature Update)**  
+**Goal:** Expand PrivacyLawForAll's core jurisdictional frameworks from **3 to 4** (EU GDPR, India DPDPA, EU AI Act $\rightarrow$ **+ United States & California**).
 
-### A. Landmark Cases Expansion (Target: 30+ Landmark Cases)
-- **Clearview AI Biometrics:** Landmark bans and fines across France, Italy, Greece, and the UK for facial recognition scraping without consent.
-- **Amazon Luxembourg (€746M):** Targeted behavioral advertising and profiling algorithm violation.
-- **Meta Behavioral Advertising Fines (€390M):** The death of the "contractual necessity" lawful basis for targeted ads.
+### Key Deliverables:
+- **California Regional Hub (`/california` or `/privacy/california`):**
+  - California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA).
+  - Core consumer rights: Right to Know, Delete, Correct, Opt-Out of Sale/Share, and Limit Use of Sensitive Personal Information.
+  - Global Privacy Control (GPC) and automated opt-out preference signal enforcement.
+  - Statutory Privacy Risk Assessment (PRA) rules under CPRA § 1798.185(a)(15).
+  - California Privacy Protection Agency (CPPA) enforcement authority and landmark actions (e.g., Sephora, DoorDash).
+- **US Federal & FTC Enforcement Hub (`/us-ftc` or `/privacy/us`):**
+  - FTC Act Section 5 enforcement against "unfair or deceptive acts or practices" in data privacy and algorithmic security.
+  - Landmark health privacy and tracking pixel enforcement (GoodRx, BetterHelp, InMarket).
+  - Children's Online Privacy Protection Act (COPPA) standards and commercial surveillance rulemaking.
+- **Global Framework Navigation Upgrade:**
+  - Update top-level framework navigation and homepage grid to seamlessly showcase all 4 global pillars.
 
-### B. United States & California Privacy Hubs (CCPA / CPRA & PRA)
-- **California Regional Hub (`/privacy/california`):** Explaining CCPA / CPRA consumer rights (Do Not Sell/Share, Right to Limit Sensitive Data, Opt-Out Preference Signals / GPC).
-- **US Federal & FTC Enforcement Hub (`/privacy/us-ftc`):** Section 5 unfair/deceptive practices, health data breaches (GoodRx, BetterHelp), and COPPA child privacy.
-- **US Privacy Risk Assessment (PRA) Studio:** Leveraging `pra-mcp` for statutory risk assessments under CPRA § 1798.185(a)(15) and FTC consent order frameworks.
+---
 
-### C. Searchable Enforcement Tracker (`/tracker`)
-- Upgrade `/top-5` into a client-side searchable, filterable enforcement directory across all 84,000+ scraped regulatory records.
-- Instant search by company name, issuing DPA, statutory article, or fine range.
+## 3. Post-US/CAL Steady-State Cadence: One Case Every Three Days
+**Status:** **OPERATIONAL POLICY**  
+**Policy:**
+- Following the deployment of the US & California framework, **all major jurisdictional expansions will be temporarily paused**.
+- The platform will transition into a steady, sustainable publication rhythm: **one newly verified, publication-grade landmark case study published every 3 days**.
+- No additional regional frameworks will be added until the platform builds organic community traction, readership growth, and community feedback.
+
 
 ### D. Exportable Compliance Dossiers
 - Enable one-click export of DPIA drafts and case briefing summaries into print-ready PDF and Markdown format for DPOs, consultants, and law students.
